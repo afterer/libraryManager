@@ -1,0 +1,185 @@
+{include file="public/search"}
+<style type="text/css">
+   .page-header-modifyUser{
+      	display: inline-block;
+    	float:left;
+    	width:65%;
+    	border-top:2px solid #eee;
+      }
+      .form-horizontal input{
+      	width:50%;
+      }
+      .form-group{
+      	padding-left:20%;
+      }
+      .public-btn{
+          width:50%;
+          height:37px;
+      }
+      .caret{
+      	float: right;
+      }
+      .page-header-result{
+	     display: inline-block;
+	     margin-top:2%;
+	     width: 70%;
+	     float: left;
+      }
+</style>
+<body>
+    <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">学生搜索</h3>
+       <h4 class="h4">查询条件</h4>
+       <form class="form-horizontal" role="form">
+		 <!--  <div class="form-group">
+		    <label class="col-sm-2 control-label">学年</label>
+		    <div class="col-sm-10">
+				<select class="form-control public-btn" id="syear">
+                    <option value="0"></option>
+					<option value="1">2013-2014</option>
+					<option value="2">2014-2015</option>
+					<option value="3">2015-2016</option>
+					<option value="4">2016-2017</option>
+					<option value="5">2017-2018</option>
+					<option value="6">2018-2019</option>
+					<option value="7">2019-2020</option>
+					<option value="8">2020-2021</option>
+					<option value="9">2021-2022</option>
+				</select>
+		    </div>
+		  </div> -->
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label" for="institute">学院</label>
+		    <div class="col-sm-10">
+				<select class="form-control public-btn" id="institute">
+				    <option value="0"></option>
+					<option value="1">信息学院</option>
+					<option value="2">计算机学院</option>
+					<option value="3">工业自动化学院</option>
+					<option value="4">材料与环境学院</option>
+					<option value="5">航空学院</option>
+					<option value="6">数理与土木学院</option>
+					<option value="7">商学院</option>
+					<option value="8">会计与金融学院</option>
+					<option value="9">外国语学院</option>
+					<option value="10">民商法律学院</option>
+					<option value="11">艺术与设计学院</option>
+				</select>
+		    </div>
+		  </div>
+		   <div class="form-group">
+		    <label class="col-sm-2 control-label" for="major">专业</label>
+		    <div class="col-sm-10">
+		         <input type="text" class="form-control" id="major" placeholder="请输入专业班级">
+		    </div>
+		  </div>
+		   <div class="form-group">
+		    <label class="col-sm-2 control-label" for="grade">年级</label>
+		    <div class="col-sm-10">
+		         <input type="text" class="form-control" id="grade" placeholder="请输入年级，如2015">
+		    </div>
+		  </div>
+		   <div class="form-group">
+		    <label class="col-sm-2 control-label" for="number">学号</label>
+		    <div class="col-sm-10">
+		       <input type="text" class="form-control" id="number" placeholder="请输入学号">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-sm-2 control-label" for="name">姓名</label>
+		    <div class="col-sm-10">
+		       <input type="text" class="form-control" id="name" placeholder="请输入姓名">
+		    </div>
+		  </div>
+		  <center><button type="button" class="btn btn-primary btn-commit">搜索</button></center>
+	  </form>
+    </div>
+     <div class="page-header page-header-result">
+	    <h3>搜索结果</h3>
+	    <hr style="border:1px dotted #555555;"/>
+		    <table class="table table-hover">
+			  <thead>
+			    <tr>
+			      <th>id</th>
+			      <th>姓名</th>
+			      <th>学号</th>
+			      <th>学院</th>
+			      <th>专业</th>
+			      <th>预约时间</th>
+			      <th>分馆</th>
+			      <th>座位号</th>
+			      <th>状态</th>
+			    </tr>
+			  </thead>
+			  <tbody class="search-content">
+			  </tbody>
+			</table>
+	   </div>
+</body>
+{include file="public/footer"}
+<script type="text/javascript">
+    $(".btn-commit").click(function(){
+    	var institute  = $("#institute").val();
+    	var major      = $("#major").val();
+    	var grade      = $("#grade").val();
+    	var number     = $("#number").val();
+    	var name       = $("#name").val();
+    	if(institute!=0||major!=""||grade!=""||number!=""||name!=""){
+
+            $.ajax({
+            	url:"ADMIN/Search/student",
+            	type:'POST',
+            	data:{
+            		institute:institute,
+            		major:major,
+            		grade:grade,
+            		number:number,
+            		name:name
+            	},
+            	dataType:'JSON',
+            	success:function(res){
+
+                   if(res['code']>0){
+                   	   var arrayid = new  Array();
+                   	   var html    = '';
+                   	   arrayid     = res['data'];
+             
+                   	   if(arrayid){
+                   	   	   for(var i=0;i<arrayid.length;i++){
+                   	   	   	   html  +='<tr>';
+		                   	   html  +='<td>'+arrayid[i]['oid']+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['name']+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['number']+'</td>';
+		                   	   html  +='<td>'+getInstitute(arrayid[i]['college'])+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['major']+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['dtimer']+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['branch']+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['seatid']+'</td>';
+		                   	   if(arrayid[i]['seat_order.status']==0){
+		                   	   	html +='<td>'+'未签到'+'</td>';
+		                   	   }else{
+		                   	   	html +='<td>'+'已签到'+'</td>';
+		                   	   }
+		                   	   html  +='</tr>';
+                   	   	   } 
+                   	   }else{
+                   	   	   html  +='<tr>';
+                   	   	   html  +='<td colspan="8" style="text-align:center">'+'目前没有结果'+'</td>';
+                   	   	   html  +='</tr>';
+                   	   }
+                   	   
+                       $(".search-content").html(html);
+                   }
+            	},
+            	error:function(res){
+            		layer.msg('系统出错',{icon:5,time:1000},function(){
+                       return false;
+            		});
+            	}
+            });
+    	}else{
+    		layer.msg('至少填写一项查询条件',{icon:3});
+            return false;
+    	}
+    });
+</script>

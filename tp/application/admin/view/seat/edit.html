@@ -1,0 +1,104 @@
+{include file="public/seat"}
+<style type="text/css">
+   .page-header-modifyUser{
+      	display: inline-block;
+      	float:left;
+      	width:65%;
+      	height:250px;
+        border-top:2px solid #eee;
+      }
+      .form-horizontal input{
+      	width:50%;
+      }
+      .form-group{
+      	padding-left:20%;
+      }
+</style>
+<body>
+   <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">修改座位信息</h3>
+
+       <form class="form-horizontal" role="form">
+  		  <div class="form-group">
+  		    <label for="lastname" class="col-sm-2 control-label">姓名</label>
+  		    <div class="col-sm-10">
+  		      <input type="text" class="form-control" id="name" readonly="readonly" value="{$data.name}">
+  		    </div>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="lastname" class="col-sm-2 control-label">学号</label>
+  		    <div class="col-sm-10">
+  		      <input type="text" class="form-control" id="number" readonly="readonly" value="{$data.number}">
+  		    </div>
+  		  </div>
+          <div class="form-group">
+  		    <label for="lastname" class="col-sm-2 control-label">学院</label>
+  		    <div class="col-sm-10">
+  		      <input type="text" class="form-control" id="institute" readonly="readonly" value="{$data.college|getInstitute=###}">
+  		    </div>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="lastname" class="col-sm-2 control-label">专业班级</label>
+  		    <div class="col-sm-10">
+  		      <input type="text" class="form-control" id="major" readonly="readonly" value="{$data.major}">
+  		    </div>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="lastname" class="col-sm-2 control-label">自习室</label>
+  		    <div class="col-sm-10">
+  		      <input type="text" class="form-control" id="room" value="{$data.seat_room}">
+  		    </div>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="lastname" class="col-sm-2 control-label">座位号</label>
+  		    <div class="col-sm-10">
+  		      <input type="text" class="form-control" id="seatid" value="{$data.seat_id}">
+  		    </div>
+  		  </div>
+		  <center><button type="button" class="btn btn-success btn-save">保存</button></center>
+	    </form>
+    </div>
+</body>
+{include file="public/footer"}
+<script type="text/javascript">
+   $(".btn-save").click(function(){
+   	   var number = $("#number").val();
+   	   var room   = $("#room").val();
+   	   var seatid = $("#seatid").val();
+   	   if(room!=""&&seatid!=""){
+          $.ajax({
+          	type:'POST',
+          	url:'ADMIN/Seat/update',
+          	data:{
+          		number:number,
+          		room:room,
+          		seatid:seatid
+          	},
+          	dataType:'json',
+          	success:function(res){
+              if(res['code']>0){
+              	  layer.msg(
+                  '修改成功', 
+                  {
+                    icon: 1,
+                    time:2000 //2秒关闭（如果不配置，默认是3秒）
+                  },
+                  function(){
+                     window.location.href="ADMIN/Seat/index";
+                  });        
+              }else{
+                  layer.msg('该座位已经被选',{icon:5});
+                  return false;
+              }
+          	},
+          	error:function(res){
+      		    layer.msg('系统出错',{icon:-1});
+              return false;
+          	}
+          });
+   	   }else{
+   	   	  layer.msg('填写内容不能为空',{icon:3});
+          return false;
+   	   }
+   });
+</script>

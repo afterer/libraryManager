@@ -1,0 +1,30 @@
+{include file="public/main"}
+<style type="text/css">
+    .panel-operation{
+    	display:inline-block;
+    	float:right;
+    	width:30%;
+        height:200px;
+        margin-top:3.5%;
+    }
+</style>
+<script type="text/javascript">
+   var div = document.getElementById('second'); 
+       div.setAttribute("class", "active"); 
+</script>
+<body>
+
+     <div class="panel panel-success panel-operation">
+		    <div class="panel-heading">
+		        <h3 class="panel-title">功能列表</h3>
+		    </div>
+		    <div class="panel-body">
+	          <ul class="list-unstyled list-group-user">
+				  <li><a href="ADMIN/Seat/index"><span class="glyphicon glyphicon-th-list"></span>&nbsp;&nbsp;选座列表</a></li>
+				   <li><a href="ADMIN/Seat/checkSeat"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;座位审核</a></li>
+				  <li><a href="ADMIN/Seat/exporte"><span class="glyphicon glyphicon-circle-arrow-down"></span>&nbsp;&nbsp;导出座位表</a></li>
+				  <li><a href="ADMIN/Seat/entering"><span class="glyphicon glyphicon-saved"></span>&nbsp;&nbsp;座位录入</a></li>
+			  </ul>
+		    </div>
+	</div>
+</body>

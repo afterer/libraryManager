@@ -1,0 +1,124 @@
+{include file="public/header"}
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+  <link rel="stylesheet" href="__PUBLIC__/mui/css/mui.min.css">
+	<style>
+        *{
+            background-color: #fff;
+        }
+		body{
+            background-color: #fff;
+		}
+        .mui-bar-nav{
+            background-color: #fff;
+       }
+        .container{
+            margin-top:20%;
+        }
+	</style>
+
+</head>
+<body>
+    <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">快速预约</h1>
+    </div>
+<!--主体开始-->
+<div class="container">
+  <form class="form-horizontal" role="form">
+       <ul class="list-group">
+            <li class="list-group-item">座位：第<cite class="seatid">121</cite>号/分馆<cite class="branchid">1</cite></li>
+            <li class="list-group-item">
+                <div class="timer-choice">
+                预约时段：
+                
+                     <input type="text" class="layui-input" id="start-timer" placeholder="H点m分">
+                    <nav>至</nav>
+                    <input type="text" class="layui-input" id="end-timer" placeholder="H点m分">
+                </div>
+            </li>
+            <li class="list-group-item">日期：  
+                <input type="text" class="layui-input" id="this-timer" placeholder="yyyy年MM月dd日">
+            </li>
+       </ul>
+       <center><button class="btn btn-primary">开始预约</button></center>
+   </form>
+</div>
+
+<!--主体结束-->
+<script src="__PUBLIC__/mui/js/mui.min.js"></script>
+<script type="text/javascript">
+layui.use('laydate', function(){
+      var laydate = layui.laydate;
+      laydate.render({
+        elem: '#start-timer'
+        ,type: 'time'
+        ,format: 'H点m分'
+      });
+      laydate.render({
+        elem: '#end-timer'
+        ,type: 'time'
+        ,format: 'H点m分'
+      });
+      laydate.render({
+        elem: '#this-timer'
+        ,format: 'yyyy年MM月dd日'
+      });
+  });
+</script>
+<script type="text/javascript">
+      $(".btn-primary").click(function(){
+         var stimer  = $("#start-timer").val();
+         var etimer  = $("#end-timer").val();
+         var dtimer  = $("#this-timer").val();
+         var seatid  = $(".seatid").text();
+         var branchid= $(".branchid").text();
+
+         if(stimer==""||etimer==""||dtimer==""){
+            layer.msg("时间不能为空",{icon:2,time:1000},function(){
+               return false;
+            });
+         }else{
+             $.ajax({
+                url:"APP_MAIN/Branch/saveOrder",
+                type:'POST',
+                data:{
+                  stimer:stimer,
+                  etimer:etimer,
+                  dtimer:dtimer,
+                  seatid:seatid,
+                  branch:branchid
+                },
+                dataType:'JSON',
+                success:function(res){
+                  if(res['code']>0){
+                     if(res['code']==1){
+                        layer.msg(res['message'],{icon:1,time:1000},function(){
+                          window.location.href="APP_MAIN/Branch/ordershow";
+                        });
+                     }else if(res['code']==2){
+                        layer.msg(res['message'],{icon:2,time:1000},function(){
+                          return false;
+                        });
+                     }
+                  }else{
+                    layer.msg(res['message'],{icon:5,time:1000},function(){
+                      return false;
+                    });
+                  }
+                },
+                error:function(){
+                  layer.msg("系统出错",{icon:5,time:1000},function(){
+                    return false;
+                  });
+                }
+             });
+         }
+      });
+</script>
+</body>
+</html>

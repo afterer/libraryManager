@@ -1,0 +1,228 @@
+{include file="public/header"}
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>选座</title>
+        <link rel="stylesheet" type="text/css" href="__STATIC__/css/seat/jquery.seat-charts.css">
+        <link rel="stylesheet" type="text/css" href="__STATIC__/css/seat/style.css">
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mui/css/mui.css">
+        <link rel="stylesheet" type="text/css" href="__STATIC__/css/bootstrap.css">
+        <style type="text/css">
+            body,.mui-bar{
+                background-color:#fff;
+            }
+            .container{
+                margin-left:-18%;
+            }
+            .container .front-indicator{
+                margin-left:40%;
+            }
+            .seat-choice{
+                display:block;
+                padding-top:15%;
+                padding-left:18%;
+            }
+            .card{
+                width:80%;
+            }
+            .card p,span{
+                color:#000;
+            }
+            .card blockquote cite{
+                color:#000;
+            }
+            .card footer{
+                margin-left:-8%;
+            }
+            .card a{
+                margin-top:5%;
+            }
+        </style>
+    </head>    
+    <body>
+        <div class="mui-navbar-inner mui-bar mui-bar-nav">
+            <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+                <span class="mui-icon mui-icon-left-nav" style="font-size:17px;">
+                {if condition="$data.room_usage eq 1"}
+                考研
+                {else/}
+                考证
+                {/if}
+                </span>
+            </button>
+            <h1 class="mui-center mui-title">{$data['room_id']}</h1>
+         </div>
+        <div class="wrapper">
+            <div class="container">
+                <div id="seat-map">
+                    <div class="front-indicator">以现场座位为准</div>                   
+                </div>
+               <!--  <div class="booking-details">
+                    <h2>Booking Details</h2>
+                    <h3> Selected Seats (<span id="counter">0</span>):</h3>
+                    <ul id="selected-seats"></ul>
+                    Total: <b>$<span id="total">0</span></b>
+                    <button class="checkout-button">Checkout &raquo;</button>
+                    <div id="legend"></div>
+                </div> -->
+            </div>
+        </div>
+         <div class="seat-choice">
+                 <div class="card card-inverse text-center">
+                  <div class="card-block">
+                    <blockquote class="card-blockquote">
+                      <p>你的选择</p>
+                      <footer><span>{$data.room_id}室</span><cite title="Source Title" id="seatId">0</cite><span>号</span></footer>
+                    </blockquote>
+                    <a href="#" class="layui-btn seatSure">确定</a>
+                  </div>
+                </div>
+            </div>
+        <script src="__STATIC__/js/seat/jquery-1.10.2.js"></script>
+        <script src="__STATIC__/js/seat/jquery.seat-charts.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/mui/js/mui.js"></script>
+        <script>
+            var firstSeatLabel = 1;
+            var isSelected     = 0;
+            $(document).ready(function() {
+                var $cart = $('#selected-seats'),
+                    $counter = $('#counter'),
+                    $total = $('#total'),
+                    sc = $('#seat-map').seatCharts({
+                    map: [
+                        'ffff_ff_',
+                        'ffff_ff_',
+                        '________',
+                        'ffff_ff_',
+                        'ffff_ff_',
+                        '________',
+                        'ffff_ff_',
+                        'ffff_ff_',
+                        '________',
+                        'ffff____',
+                        'ffff____',
+                        '________',
+                        'ffff_ff_',
+                        'ffff_ff_',
+                        '________',
+                        'ffff____',
+                        'ffff____',
+                        '________',
+                        'ffff_ff_',
+                        'ffff_ff_',
+                        '________',
+                        'ffff_ff_',
+                        'ffff_ff_',
+                        '________',
+                        'ffff____',
+                        'ffff____',
+                    ],
+                    seats: {
+                        f: {
+                            price   : 100,
+                            classes : 'first-class', //your custom CSS class
+                            category: 'First Class'
+                        },
+                        e: {
+                            price   : 40,
+                            classes : 'economy-class', //your custom CSS class
+                            category: 'Economy Class'
+                        }                                       
+                    },
+                    naming : {
+                        top : false,
+                        getLabel : function (character, row, column) {
+                            return firstSeatLabel++;
+                        },
+                    },
+                    legend : {
+                        node : $('#legend'),
+                        items : [
+                            [ 'f', 'available',   'First Class' ],
+                            [ 'e', 'available',   'Economy Class'],
+                            [ 'f', 'unavailable', 'Already Booked']
+                        ]                   
+                    },
+                    click: function () {
+                        if (this.status() == 'available') {
+                            // $('<li>'+this.data().category+' Seat # '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                            //     .attr('id', 'cart-item-'+this.settings.id)
+                            //     .data('seatId', this.settings.id)
+                            //     .appendTo($cart);                                                     
+                            // $counter.text(sc.find('selected').length+1);
+                            // $total.text(recalculateTotal(sc)+this.data().price); 
+                            if(isSelected==0){
+                                var seatid = this.settings.id;//n_m
+                                var label  = this.settings.label;//座位号
+                                $('#seatId').text(label); 
+                                isSelected = 1;                     
+                                return 'selected';
+                            }else{
+                                layer.msg("抱歉，您已经选择");
+                                return "available";
+                            }
+                            
+                        } else if (this.status() == 'selected') {
+                            //$counter.text(sc.find('selected').length-1);
+                            //$total.text(recalculateTotal(sc)-this.data().price);
+                            //$('#cart-item-'+this.settings.id).remove();
+                            if(isSelected==1){
+                                isSelected = 0;
+                                $('#seatId').text("0"); 
+                                return 'available';
+                            }         
+                            
+                        } else if (this.status() == 'unavailable') {
+                            return 'unavailable';
+                        } else {
+                            return this.style();
+                        }
+                    }
+                });
+                $('#selected-seats').on('click', '.cancel-cart-item', function () {
+                   sc.get($(this).parents('li:first').data('seatId')).click();
+                });
+                sc.get([{$choosed}]).status('unavailable');
+        });
+        function recalculateTotal(sc) {
+            var total = 0;
+            sc.find('selected').each(function () {
+                total += this.data().price;
+            });
+          return total;
+        }
+        </script>
+    
+       <script type="text/javascript">
+              <!--选择座位后，需要到数据库里判断该学生是否有座位，有就不让选，否则就录入数据表-->
+              $(".seatSure").click(function(){
+                 var seatid = $("#seatId").text();
+                 var roomid = {$data.room_id};
+                 $.ajax({
+                    url:'APP_MAIN/Select/seatSure',
+                    type:'POST',
+                    data:{
+                        seatid:seatid,
+                        roomid:roomid,
+                    },
+                    dataType:'JSON',
+                    success:function(res){
+                        if(res['code']>0){
+                            layer.msg(res['message'], {icon: 1,time:1000},function(){
+                                window.location.href="APP_MAIN/Student/info67";
+                            });
+                        }else{
+                            layer.msg(res['message'], {icon: 2,time:1000});
+                            return false;
+                        }
+                    },
+                    error:function(){
+                         layer.msg('系统出错', {icon: 5,time:1000});
+                         return false;
+                    }
+
+                 });
+              });
+       </script>
+    </body>
+</html>

@@ -1,0 +1,91 @@
+{include file="public/seat"}
+<style type="text/css">
+   .page-header-modifyUser{
+      	display: inline-block;
+      	float:left;
+      	width:65%;
+        border-top:2px solid #eee;
+      }
+      .content-page{
+        display: block;
+        text-align: center;
+      }
+      .table{
+        margin-top:2%;
+      }
+</style>
+<body>
+   <div class="page-header page-header-modifyUser">
+      <h3 style="font-weight:bold;">选座列表</h3>
+      <table class="table table-bordered">
+	  <thead>
+	    <tr>
+        <th>id</th>
+	      <th>姓名</th>
+	      <th>学号</th>
+	     
+	      <th>学院</th>
+	      <th>专业班级</th>
+	      <th>联系方式</th>
+	      <th>自习室</th>
+	      <th>座位号</th>
+	      <th>操作</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+     {foreach name="data" item="list"}
+	    <tr>
+        <td>{$list.sid}</td>
+	      <td>{$list['name']}</td>
+	      <td>{$list['seat_own']}</td>
+	     
+	      <td>{$list['college']|getInstitute=###}</td>
+	      <td>{$list['major']}</td>
+	      <td>{$list['phone']}</td>
+	      <td>{$list['seat_room']}</td>
+	      <td>{$list['seat_id']}</td>
+	      <td>
+	      <a href="ADMIN/seat/edit/id/{$list['number']}" id="edit"><span class="glyphicon glyphicon-edit"></span>编辑</a>&nbsp;&nbsp;
+	      <a href="#" id="del" attr-id="{$list.number}" attr-year="{$list.seat_year}"><span class="glyphicon glyphicon-trash"></span>删除</a>
+	      </td>
+	    </tr>
+	    {/foreach}
+	  </tbody>
+	</table>
+  <div class="content-page">{$page}</div>
+   </div>
+</body>
+{include file="public/footer"}
+<script type="text/javascript">
+   
+   //删除
+   $("#del").click(function(){
+   	   var number = $("#del").attr('attr-id');
+       var year   = $("#del").attr('attr-year');
+   	   $.ajax({
+   	   	 type:'GET',
+   	   	 url:'ADMIN/Seat/del',
+   	   	 data:{
+          year:year,
+   	   	 	number:number
+   	   	 },
+         dataType:'json',
+         success:function(res){
+            if(res['code']>0){
+            	layer.msg('删除成功',{icon:1,time:1000},function(){
+                window.location.href="ADMIN/Seat/index";
+              });
+            	
+            }else{
+                layer.msg('删除失败',{icon:2});
+                return false;
+            }
+         },
+         error:function(){
+         	 layer.msg('系统出错',{icon:-1});
+           return false;
+         }
+   	   });
+   });
+
+</script>

@@ -1,0 +1,111 @@
+{include file="public/header"}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Main_Nav_Bottom</title>
+        <style type="text/css">
+           .navbar{
+             width:100%;
+             height:30px;
+             border-bottom:1px solid #EDEDED;
+             background-color:#FDFDFD
+           }
+           .navbar .btn{
+             float:left;
+             display:inline-block;
+             width:50px;
+             height:50px;
+             background-color:#FDFDFD;
+             border-bottom:1px solid #EDEDED;
+           }
+           .navbar .btn .define-glyphicon{
+              display:inline-block;
+              top:3px;
+           }
+           .navbar nav{
+             display:inline-block;
+             margin-left:-40px;
+             margin-top:10px;
+             font-size:20px;
+           } 
+           .mui-content{
+            margin-top:15%;
+           }
+           .define-bar{
+            font-size:18px;
+            background-color:#DCDCDC;
+            height:40px;
+            line-height:40px;
+            border-bottom:1px solid #D1D1D3;
+           }
+           .define-glyphicon-right{
+            float:right;
+            margin-top:6px;
+            color:#C7C7C7;
+           }
+           .define-btn{
+            float:right;
+            height:5px;
+           }
+        </style>
+    </head><!-- 在头部引入bootstrap的css包与js包 -->
+ 
+    <body> 
+   <!--  <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">个人</h1>
+    </div> -->
+    <header class="navbar  navbar-fixed-top">
+        <button type="button" class="btn">
+          <a href="#"><span class="glyphicon glyphicon-chevron-left"></span>个人</a>       
+        </button>
+        <center><nav>标题</nav></center>
+    </header>
+    <div class="mui-content">
+        <div class="row">
+            <p>
+                排序前
+            </p>
+            <div class="col-md-12 define-bar">
+             我在 <button type="button" class="btn define-btn"><span class="glyphicon glyphicon glyphicon-menu-right define-glyphicon-right"></span></button>
+            </div>
+            <div class="col-md-12 define-bar">
+             你在<button type="button" class="btn define-btn"><span class="glyphicon glyphicon glyphicon-menu-right define-glyphicon-right"></span></button>
+            </div>
+       </div>
+    <br>
+    <div class="row">
+        <p>
+            排序后
+        </p>
+       <div class="col-md-12 define-bar" >
+         他在<button type="button" class="btn define-btn"><span class="glyphicon glyphicon glyphicon-menu-right define-glyphicon-right"></span></button>
+        </div>
+    </div>
+ 
+        <div class="main_nav_bottom">
+                <nav class="navbar navbar-default navbar-fixed-bottom">
+                    <div class="container" align="center">
+                        <style>
+                            .nav-tabs
+                            {
+                                text-align: center;
+                                height: 40px;
+                                line-height: 40px;
+                            }
+                        </style>
+                        <ul class="nav nav-tabs nav-tabs-justified">
+                            <div class="row" align="center">
+                                <div class="col-md-6 col-sm-6 col-xs-6" align="center"><li><a href="#">Bootstrap1</a></li></div>
+                                <div class="col-md-6 col-sm-6 col-xs-6" align="center"><li><a href="#">Bootstrap2</a></li></div>
+                            </div>
+                        </ul>
+                    </div>
+                </nav>
+        </div>
+       </div>  
+    </body>
+</html>

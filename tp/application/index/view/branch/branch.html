@@ -1,0 +1,222 @@
+{include file="public/header"}
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <meta charset="utf-8">  
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+    <link rel="stylesheet" href="__PUBLIC__/mui/css/mui.min.css">
+    <title>分馆预定选座</title>  
+    <style>   
+        body{
+            background-color: #fff;
+            width: 100%;
+        } 
+        ul {    
+        padding-left:5%;   
+        list-style: none;/*去掉ul样式*/    
+        }    
+        ul li {    
+        float:left;/*使li水平平铺*/    
+        }  
+  
+        /*为奇数的li*/    
+        ul li:nth-child(odd) {  
+        }   
+        /*椅子的样式*/    
+        ul[name = "chair"] li img {    
+        height: 16px;/*位置宽高*/    
+        width: 16px;    
+        }    
+        /*每行第一个椅子*/    
+        ul[name = "chair"] li:first-child img {    
+        margin-left:15spx;    
+        }    
+        /*奇数椅子*/    
+        ul[name = "chair"] li:nth-child(2n+3) img {    
+        margin-left:30px;/*异桌椅子之间的距离*/    
+        }    
+        /*偶数椅子*/    
+        ul[name = "chair"] li:nth-child(even) img {    
+        margin-left:10px;/*同桌椅子之间的距离*/    
+        }    
+        .mui-bar-nav{
+            background-color: #fff;
+       }
+        .content{
+            margin-top:15%;
+            margin-bottom:14%;
+        }
+       .footer {
+        width: 100%;
+        height: 50px;
+        position: fixed;
+        /*border:1px solid #097FFF;*/
+        bottom: 0;
+    }
+    .choice-seat{
+        display:inline-block;
+        float:left;
+        width:50%;
+        background-color:#5BC0DE;
+        height:100%;
+        text-align:center;
+        line-height:50px;
+        color:#fff;
+        font-size:14px;
+    }
+    .commit-btn{
+        display: inline-block;
+        width:50%;
+        background-color:#fff;
+        height:100%;
+
+    }
+    .btn-success{
+        width: 100%;
+        height:100%;
+    }
+    </style>  
+
+</head>  
+  
+<body>  
+    <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">分馆一</h1>
+    </div>
+      
+    <div class="content">  
+        <!--30行20列-->
+        <div id="seats"></div>  
+        <div class="footer">
+            <div class="choice-seat">座位：第<cite class="myid">0</cite>号</div>
+            <div class="commit-btn"><button type="button" class="btn btn-success">确定</button></div>
+        </div>
+    </div> 
+</body>  
+  
+<script src="__PUBLIC__/mui/js/mui.min.js"></script>
+<script src="__STATIC__/js/jquery-1.12.4.js"></script>  
+<script type="text/javascript">  
+    //$(ul).width = window.screen.width;    
+  
+    //定义座位二维数组    
+    //0表示这个位置没有座位    
+    //1可选表示空位    
+    //2表示被别人占位    
+    //3表示自己选中的座位    
+    var seatArray = new Array();  
+    var flag=0;
+    var sureRow;
+    var sureCol;  
+    for(var i=0;i<30;i++){
+    //一维数组长度为30    
+        seatArray[i]=new Array();    
+        for(var j=0;j<20;j++){
+        //第二维长度为20    
+            seatArray[i][j]=1;  
+        }  
+    }    
+    //设置空位    
+   // seatArray[1][5]=0;    
+    //设置被人占得位置    
+    //seatArray[2][6]=2;
+   
+    //添加30行li    
+    for(var v=0;v<30;v++){    
+        $('#seats').append(  
+            '<ul name = "chair">'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+    
+                '<li><img src="__STATIC__/images/seat_sale.png"/></li>'+      
+            '</ul>'+'<br/>')  
+    }  
+  
+    //初始化特殊位置：没有座位的，被占的    
+    for(var i=0;i<30;i++){  
+        for(var j=0;j<10;j++){  
+        //没有座位  
+        if(seatArray[i][j]==0)    
+            $('#seats >ul[name = "chair"]').eq(1).children().eq(j).replaceWith('<li><img src="__STATIC__/images/seat_empty.png"/></li>');    
+        //已经被别人占    
+        if(seatArray[i][j]==2)    
+            $('#seats >ul[name = "chair"]').eq(i).children().eq(j).replaceWith('<li><img src="__STATIC__/images/seat_selected.png"/></li>')    
+        }  
+    }  
+  
+    //行号：parseInt($(this).parent().index()/2)    
+    //列号：$(this).index()  
+  
+    $("ul[name = 'chair'] li").click(function(){  
+            var row = parseInt($(this).parent().index()/2);    
+            var col = $(this).index(); 
+
+            if(flag==0){
+                 
+
+                  // 如果可选则更新状态  
+                if (seatArray[row][col] == 1) {  
+                    //更换图片
+                    // alert(row+' '+' '+col+' ');
+                    $(this).replaceWith('<li><img src="__STATIC__/images/seat_selected.png"/></li>');
+                    //更新自己选定的数组位置状态    
+                    seatArray[row][col] = 3; 
+                    flag                = 1; 
+                    sureRow             = row;
+                    sureCol             = col;  
+                   //报行列号    
+                    layer.msg('第'+row+'行  第'+col+'列');  
+                    var seatid = row*10+col+1;
+                    $('.myid').text(seatid);
+                    
+                }else{  
+                    layer.msg("作为已被占或不存在该座位！");  
+                    return false;
+                }  
+            }
+            else if(flag==1){
+                // alert(row+' '+sureRow+' '+col+' '+sureCol);
+                if(row != sureRow&&col != sureCol){
+                   
+                    layer.msg("抱歉，您已选择");
+                    return false;
+                }else{
+                     //更换图片
+                    $(this).replaceWith('<li><img src="__STATIC__/images/seat_sale.png"/></li>');
+                    //更新自己选定的数组位置状态 
+                    seatArray[row][col]= 1;
+                    flag               = 0;   
+                    $('.myid').text('0');
+                }
+                
+            } 
+            
+          
+          
+     });   
+</script>  
+<script type="text/javascript">
+    $(".btn-success").click(function(){
+        var seatid  = $('.myid').text();
+        if(seatid!=''){
+             window.location.href="APP_MAIN/Branch/orderLib?id="+seatid;
+        }
+       
+
+    });
+</script>
+</html>  
+
+0-0 1
+0-1 2
+0-2 3
+a-b a*10+b+1=c c-1=a*10+b

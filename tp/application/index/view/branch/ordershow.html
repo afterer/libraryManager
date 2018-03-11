@@ -1,0 +1,66 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__PUBLIC__/mui/css/mui.min.css">
+<link rel="stylesheet" href="__STATIC__/css/styles.css" />
+<link rel="stylesheet" href="__STATIC__/countdown/jquery.countdown.css" />
+<style type="text/css">
+  
+  body{
+        background-color: #fff;
+   }
+   .mui-bar{
+        background-color: #fff;
+   }
+  .container{
+   	 margin-top:15%;
+     background-color: #fff;
+   }
+   .container table td{
+   	 text-align: center;
+   }
+   .list-group-item .cont{
+     display: inline-block;
+     padding-left:15%;
+   }
+   .panel{
+   	border:1px solid green;
+   	font-size:16px;
+   }
+</style>
+
+<body>
+   <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">我的预约</h1>
+   </div>
+   <div class="container">
+       <table class="table table-bordered">
+          <tr>
+             <th>姓名：</th><td>张三</td>
+          </tr>
+          <tr><th>学号：</th><td>150201102017</td></tr>
+          <tr><th>分馆：</th><td>分馆一</td></tr>
+          <tr><th>座位：</th><td>第121号</td></tr>
+          <tr><th>时段：</th><td>9:00-11:30</td></tr>
+          <tr><th>情况：</th><td>待签到</td></tr>
+          <tr><th>操作：</th><td><button class="btn btn-primary">取消预约</button></td></tr>
+          <tr><td colspan="2">
+              <div id="countdown"></div>
+		      <p id="note"></p></td>
+		  </tr>
+       </table>
+       <div class="panel panel-default">
+		    <div class="panel-heading">
+		        温馨提示
+		    </div>
+		    <div class="panel-body">
+		        预约成功后，请在开始使用前15分钟内到达现场扫码签到，否则将自动取消
+		    </div>
+		</div>
+   </div>
+</body>
+<script src="__PUBLIC__/mui/js/mui.min.js"></script>
+<!-- <script src="http://www.jq22.com/jquery/1.7.2/jquery.min.js"></script> -->
+<script src="__STATIC__/countdown/jquery.countdown.js"></script>
+<script src="__STATIC__/js/script.js"></script>

@@ -1,0 +1,110 @@
+{include file="public/seat"}
+<style type="text/css">
+   .page-header-modifyUser{
+      	display: inline-block;
+      	float:left;
+      	width:65%;
+        border-top:2px solid #eee;
+      }
+      .content-page{
+        display: block;
+        text-align: center;
+      }
+      .table{
+        margin-top:2%;
+      }
+</style>
+<body>
+   <div class="page-header page-header-modifyUser">
+      <h3 style="font-weight:bold;">选座审核</h3>
+      <table class="table table-bordered">
+	  <thead>
+	    <tr>
+        <th>id</th>
+	      <th>姓名</th>
+	      <th>学号</th>
+	      
+	      <th>学院</th>
+	      <th>专业班级</th>
+	      <th>联系方式</th>
+	      <th>自习室</th>
+	      <th>座位号</th>
+	      <th>审核</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+    {foreach name="data" item="list"}
+       <tr>
+        <td>{$list['sid']}</td>
+        <td>{$list['name']}</td>
+        <td>{$list['seat_own']}</td>
+       
+        <td>{$list.college|getInstitute=###}</td>
+        <td>{$list['major']}</td>
+        <td>{$list['phone']}</td>
+        <td>{$list['seat_room']}</td>
+        <td>{$list['seat_id']}</td>
+        <td>
+          {if condition="$list.seat_status eq 0"}
+           <button type="button" class="btn btn-sm btn-success" onclick="check({$list.seat_own})">点击审批</button>
+          {elseif condition="$list.seat_status eq 1"}
+           <button type="button" class="btn btn-sm btn-info">已审同意</button>
+           {elseif condition="$list.seat_status eq 2"}
+           <button type="button" class="btn btn-sm btn-danger">已审否决</button>
+          {/if}
+        </td>
+      </tr>
+      {/foreach}
+	  </tbody>
+	</table>
+
+   </div>
+</body>
+{include file="public/footer"}
+<script type="text/javascript">
+   function check(id){
+      var number = id;
+      layer.open({
+        content: '是否通过审核？',
+        btn: ['通过', '否决'],
+        yes: function(){
+          //按钮【按钮一】的回调
+          status = 1;
+          tocheck(number,status);
+        },
+        btn2: function(){
+          //按钮【按钮二】的回调
+          status = 2;
+          tocheck(number,status);
+          //return false 开启该代码可禁止点击该按钮关闭
+        },
+        cancel: function(){ 
+          
+        }
+      });
+    }
+    function tocheck(number,status){
+      $.ajax({
+          url:'ADMIN/Seat/checkStatusByNumber',
+          type:'POST',
+          data:{
+            number:number,
+            status:status,
+          },
+          dataType:'JSON',
+          success:function(res){
+            if(res['code']>0){
+              layer.msg('已经审核',{icon:1,time:1000},function(){
+                window.location.href="ADMIN/Seat/checkSeat";
+              });
+            }
+          },
+          error:function(){
+            layer.msg('系统出错',{icon:5,time:1000},function(){
+              return false;
+            });
+          }
+        });
+    }
+      
+</script>

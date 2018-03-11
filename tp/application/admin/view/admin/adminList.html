@@ -1,0 +1,47 @@
+{include file="public/admin"}
+<style type="text/css">
+    .page-header-modifyUser{
+      	display: inline-block;
+      	float:left;
+      	width:65%;
+        border-top:2px solid #eee;
+      }
+      .content-page{
+      	display: inline-block;
+        text-align: center;
+      }
+</style>
+<body>
+    <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">管理员列表</h3>
+	     <table class="table table-condensed">
+		  <thead>
+		    <tr>
+		      <th>id</th>
+		      <th>用户名</th>
+		      <th>姓名</th>
+		      <th>性别</th>
+		      <th>权限等级</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  {if condition="$status eq 1"}
+		  {foreach name="data" item="list"}
+		    <tr>
+		      <td>{$list['id']}</td>
+		      <td>{$list['username']}</td>
+		      <td>{$list['name']}</td>
+		      <td>{$list['sex']|getSex=###}</td>
+		      <td>{$list['level']|getLevel=###}</td>
+		    </tr>
+		   {/foreach}
+		   {else/}
+		   <tr>
+              <td colspan="4" align="center" style="color:#3C763D;">{$data}</td>
+		   </tr>
+		   {/if}
+		  </tbody>
+		</table>
+    </div>
+    <div class="content-page">{$page}</div>
+</body>

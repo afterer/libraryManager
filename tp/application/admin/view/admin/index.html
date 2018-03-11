@@ -1,0 +1,36 @@
+{include file="public/admin"}
+<style type="text/css">
+    .boot-content{
+    	display: block;
+    }
+    .page-header{
+    	display: inline-block;
+    	float:left;
+    	width:65%;
+    	height:200px;
+    	border:1px solid #eee;
+        background-color:#eee;
+    }
+    .page-header h1,p{
+    	padding-left:5%;
+
+    }
+    .page-header h1{
+    	font-weight: bold;
+    	padding-top:2%;
+    }
+    
+</style>
+<body>
+   <div class="boot-content">
+		<div class="page-header">
+		    <h1>欢迎您！{$data['name']}
+		        <small></small>
+		    </h1>
+            <br/>
+		    <p class="h5">这里是北京理工大学珠海学院-图书馆座位管理系统</p>
+	    </div>
+    </div>
+   
+</body>
+{include file="public/footer"}

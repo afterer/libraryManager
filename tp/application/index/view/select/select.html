@@ -1,0 +1,79 @@
+{include file="public/header"}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/mui/css/mui.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/bootstrap.css">
+<style type="text/css">
+    .mui-content,.mui-bar{
+    	background-color:#fff;
+    }
+    .card-content{
+         margin-top:13%;
+    }
+    .card{
+    	width:85%;
+    	margin-left:8%;
+    }
+    .card p{
+    	color:#fff;
+    }
+    .card footer{
+    	font-weight:bold;
+    	font-size:16px;
+    }
+</style>
+<body>
+<div class="mui-content">
+   <div class="mui-navbar-inner mui-bar mui-bar-nav">
+		<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>
+		<h1 class="mui-center mui-title">
+         {if condition="$usage eq 1"}
+         考研
+         {else/}
+         考证
+         {/if}
+		</h1>
+	</div>
+	<!--房间列表-start-->
+	<div class="card-content">
+	    {foreach name="data" item="list"}
+		    {if condition="$list.room_state eq 0"}
+		    <a href="{:Url('Select/seat',['id'=>$list.room_id]);}">
+			   <div class="card card-inverse card-primary text-center">
+				  <div class="card-block">
+				    <blockquote class="card-blockquote">
+				      <p>剩余{$list.room_number-$list.seat_changed}个座位</p>
+				      <footer>{$list.room_id}室<cite title="Source Title">&nbsp;&nbsp;可选</cite></footer>
+				    </blockquote>
+				  </div>
+				</div>
+			</a>
+			{else /}
+			<a href="">
+				<div class="card card-inverse card-success text-center">
+				  <div class="card-block">
+				    <blockquote class="card-blockquote">
+				      <p>剩余{$list.room_number-$list.seat_changed}个座位</p>
+				      <footer>{$list.room_id}室<cite title="Source Title">&nbsp;&nbsp;暂不能选</cite></footer>
+				    </blockquote>
+				  </div>
+				</div>
+			</a>
+			{/if}
+		{/foreach}
+    </div>
+	<!--房间列表-end-->
+	<!-- <nav style="text-align:center;font-size:10px;">————已经到底部————</nav> -->
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/mui/js/mui.js"></script>
+<script type="text/javascript" src="__STATIC__/js/bootstrap.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+{include file="public/footer"}
+<script type="text/javascript">
+	function robSeat(roomId){
+		//获取到room_id
+		window.location.href ="APP_MAIN/select/selectSeat/id/"+roomId;
+	}
+
+</script>

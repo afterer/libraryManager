@@ -1,0 +1,104 @@
+{include file="public/header"}
+<!DOCTYPE html>
+<html>
+    <head>
+		<link rel="stylesheet" href="__PUBLIC__/mui/css/mui.min.css">
+    </head>
+    <style type="text/css">
+       body{
+       	    background-color: #fff;
+       }
+       .mui-bar{
+       	    background-color: #fff;
+       }
+       .mui-scroll-wrapper{
+       	    margin-top:10%;
+       }
+       .mui-scroll ul{
+       	    margin-top:5%;
+       	    background-color:#DCDCDC;
+       }
+       .nav-tabs .row .user a{
+        color:#5BC0DE;
+       }
+    </style>
+<body>
+	<div class="mui-navbar-inner mui-bar mui-bar-nav">
+		<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>
+		<h1 class="mui-center mui-title">个人</h1>
+	</div>
+	<!--页面主内容区开始-->
+	<div class="mui-page-content">
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell mui-media">
+						<a class="mui-navigate-right" href="APP_MAIN/Student/user">
+						   
+							<img class="mui-media-object mui-pull-left head-img" id="head-img" src="__STATIC__/images/name.png">
+				
+							<div class="mui-media-body">
+								{$info.name}
+								<p class='mui-ellipsis'>学号:{$info.number}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						<a href="#" class="mui-navigate-right">我的预约</a>
+					</li>
+				</ul>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						<a href="#" class="mui-navigate-right">历史信息</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="APP_MAIN/Student/info67" class="mui-navigate-right">其他信息</a>
+					</li>
+				</ul>
+				<ul  class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+							<a href="APP_MAIN/Student/version" class="mui-navigate-right">关于图书馆<i class="mui-pull-right update">1.0</i></a>
+				    </li>
+			    </ul>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" style="text-align: center;">
+						<a href="#" class="logout">退出登录</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--页面主内容区结束-->
+</body>
+{include file="public/footer"}
+<script src="__PUBLIC__/mui/js/mui.min.js"></script>
+<script type="text/javascript">
+     $(".logout").click(function(){
+     	$.ajax({
+    		type:'GET',
+    		url:'APP_MAIN/Student/logout',
+    		success:function(res){
+    			if(res['code']>0){
+    				layer.msg(
+                    '正在退出', 
+                    {
+                      icon: 6,
+                      time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    },
+                    function(){
+                       window.location.href="APP_MAIN/Login/login";
+                    });   
+    			}
+    		},
+    		error:function(){
+    			layer.msg('系统出错',{icon:-1});
+    			return false;
+    		}
+    	});
+     });
+</script>
+</html>

@@ -1,0 +1,27 @@
+{include file="public/main"}
+<style type="text/css">
+    .panel-operation{
+    	display:inline-block;
+    	float:right;
+    	width:30%;
+        height:200px;
+        margin-top:3.5%;
+    }
+</style>
+<script type="text/javascript">
+   var div = document.getElementById('third'); 
+       div.setAttribute("class", "active"); 
+</script>
+<body>
+     <div class="panel panel-success panel-operation">
+		    <div class="panel-heading">
+		        <h3 class="panel-title">功能列表</h3>
+		    </div>
+		    <div class="panel-body">
+	          <ul class="list-unstyled list-group-user">
+				  <li><a href="ADMIN/search/student"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;学生查询</a></li>
+				  <li><a href="ADMIN/search/seat"><span class="glyphicon glyphicon-zoom-in"></span>&nbsp;&nbsp;座位查询</a></li>
+			  </ul>
+		    </div>
+	</div>
+</body>

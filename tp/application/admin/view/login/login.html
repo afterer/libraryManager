@@ -1,0 +1,61 @@
+{include file="public/header"}
+<style type="text/css">
+   .btn{
+     margin-top:3%;
+   }
+</style>
+<body>
+  <div style="padding: 100px 100px 10px;">
+  <h2>欢迎登录--图书馆选座系统</h2>
+    <form class="bs-example bs-example-form" role="form">
+        <div class="input-group">
+            <span class="input-group-addon">用户名：</span>
+            <input type="text" class="form-control" placeholder="请输入用户名" id="username">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;码：</span>
+            <input type="password" class="form-control" placeholder="请输入密码" id="passwd">
+        </div>
+       
+        <button type="button" class="btn btn-lg btn-primary btn-block" id="btn-commit" 
+	    data-toggle="button"> 登录
+	    </button>
+    </form>
+</div> 
+</body>
+<script type="text/javascript">
+    $(".btn-block").click(function(){
+        var username  = $("#username").val();
+        var passwd    = $("#passwd").val();
+        if(username!=""&&passwd!=""){
+            $.ajax({
+                type:"POST",
+                url:"ADMIN/Login/login",
+                data:{
+                    username:username,
+                    password:passwd
+                },
+                dataType:'JSON',              
+                async:true,
+                success:function(res){
+                   if(res.code>0){
+                     layer.alert("登录成功",{icon:1,time:2000});
+                     window.location.href="ADMIN/admin/index";
+                   }else{
+                    layer.alert("登录失败",{icon:2,time:1000});
+                    return false;
+                   }                 
+                },
+                error:function(res){
+                   layer.alert('系统出错',{icon:5,time:1000});
+                   return false;
+                }
+
+            });
+        }else{
+            layer.alert("填写内容不能为空",{icon:2});
+           return false;
+        }
+    });
+</script>

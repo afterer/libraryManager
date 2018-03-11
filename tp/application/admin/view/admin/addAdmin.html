@@ -1,0 +1,113 @@
+{include file="public/admin"}
+<style type="text/css">
+    .page-header-modifyUser{
+      	display: inline-block;
+      	float:left;
+      	width:65%;
+      	height:300px;
+        border-top:2px solid #eee;
+      }
+      .form-horizontal input{
+      	width:50%;
+      }
+      .form-group{
+      	padding-left:20%;
+      }
+</style>
+<body>
+    <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">添加管理员</h3>
+
+       <form class="form-horizontal" role="form">
+  		  <div class="form-group">
+  		    <label for="firstname" class="col-sm-2 control-label">用户名</label>
+  		    <div class="col-sm-10">
+  		      <input type="text" class="form-control" placeholder="请输入用户名" id="username">
+  		    </div>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="lastname" class="col-sm-2 control-label">姓名</label>
+  		    <div class="col-sm-10">
+  		      <input type="text" class="form-control" placeholder="请输入姓名" id="name">
+  		    </div>
+  		  </div>
+        <div class="form-group">
+          <label for="sex" class="col-sm-2 control-label">性别</label>
+          <div class="col-sm-10">
+            <label class="radio-inline">
+                <input type="radio" name="sex" id="male" value="0" checked> 男
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="sex" id="female"  value="1">女
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="lastname" class="col-sm-2 control-label">密码</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" placeholder="请输入密码" id="passwd">
+          </div>
+        </div>
+          <div class="form-group">
+          <label for="lastname" class="col-sm-2 control-label">确认密码</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control"  placeholder="请再输入密码" id="repasswd">
+          </div>
+        </div>
+		  <center><button type="button" class="btn btn-success btn-save">保存</button></center>
+	    </form>
+    </div>
+</body>
+{include file="public/footer"}
+<script type="text/javascript">
+      $(".btn-save").click(function(){
+         var username = $("#username").val();
+         var name     = $("#name").val();
+         var passwd   = $("#passwd").val();
+         var repasswd = $("#repasswd").val();
+         var sex      = $('input[name="sex"]:checked').val();
+         if(username!=""&&name!=""&&passwd!=""&&repasswd!=""&&sex!=""){
+              if(passwd != repasswd){
+                layer.msg('密码填写不一致',{icon:2});
+                return false;
+              }
+              $.ajax({
+              type:'POST',
+              url:'ADMIN/admin/addAdmin',
+              data:{
+                username:username,
+                name:name,
+                sex:sex,
+                password:passwd
+              },
+              dataType:'json',
+              async:true,
+              success:function(res){
+                if(res['code']>0){
+                  layer.msg(
+                  '添加成功', 
+                  {
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                  },
+                  function(){
+                     window.location.href="ADMIN/admin/index";
+                  });                     
+                }else{
+                  layer.msg('当前管理员无权添加',{icon:5});
+                  return false;
+                }
+              },
+              error:function(res){
+                  layer.msg('系统出错',{icon:-1});
+                  return false;
+              }
+            });
+             
+         }else{
+            layer.msg('填写内容不能为空',{icon:2});
+            return false;
+         }
+        
+      });
+</script>

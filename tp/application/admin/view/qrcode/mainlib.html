@@ -1,0 +1,38 @@
+{include file="public/header"}
+<style type="text/css">
+    body{
+    	/*background-color: #000;*/
+    }
+    #output{
+    	margin-left:24%;
+    	margin-top:3%;
+    }
+</style>
+<body>
+<div id="output"></div>
+</body>
+<script src="__STATIC__/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.qrcode.min.js"></script>
+<script>
+
+jQuery(function(){
+    setTimeout(function(){
+    	var tim =  Date.parse(new Date());
+    	
+    	jQuery('#output').qrcode({
+		    render: "table", //也可以替换为table
+		    width: 600,
+		    height: 600,
+		    // foreground: "#fff",
+      //       background: "#000",
+		    text: '{$signUrl}'+tim
+		});
+    	setTimeout(function(){
+          window.location.href="ADMIN/Qrcode/mainlib";
+    	},3000);   
+
+    },100);
+	
+
+})
+</script>

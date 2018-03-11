@@ -1,0 +1,41 @@
+{include file="public/setting"}
+<style type="text/css">
+    .page-header-modifyUser{
+      	display: inline-block;
+      	float:left;
+      	width:65%;
+      	height:350px;
+        border-top:2px solid #eee;
+      }
+      .form-group{
+      	padding-left:20%;
+      }
+      .public-btn{
+      	width:50%;
+      }
+</style>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/css/fileinput.min.css">
+<script type="text/javascript" src="__PUBLIC__/bootstrap/js/fileinput.min.js"></script>
+<body>
+    <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">导入学生</h3>
+       <form class="form-horizontal" role="form">
+  		   <div class="form-group">
+		    <label class="col-sm-2 control-label">文件</label>
+		    <div class="col-sm-10">
+				     <input id="excelfile" class="file" type="file">
+		    </div>
+		  </div>
+		  <center>
+      <button type="button" class="btn btn-success btn-output">导入名单</button>
+      </center>
+	   </form>
+    </div>
+</body>
+<script type="text/javascript">
+   
+   $(".btn-output").click(function(){
+   	  var syear = $("#syear").val();
+   	  window.location.href="ADMIN/Publish/excelOutput/syear/"+syear;
+   });
+</script>

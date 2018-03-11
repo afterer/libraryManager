@@ -1,0 +1,58 @@
+{include file="public/main"}
+<style type="text/css">
+     .panel-operation{
+    	display:inline-block;
+    	float:right;
+    	width:30%;
+        height:200px;
+        margin-top:3.5%;
+    }
+</style>
+<script type="text/javascript">
+   var div = document.getElementById('first'); 
+       div.setAttribute("class", "active"); 
+</script>
+<body>
+    <div class="panel panel-success panel-operation">
+		    <div class="panel-heading">
+		        <h3 class="panel-title">您的账号</h3>
+		    </div>
+		    <div class="panel-body">
+	          <ul class="list-unstyled list-group-user">
+				  <li><a href="ADMIN/admin/modifyUser"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;修改资料</a></li>
+				  <li><a href="ADMIN/admin/modifyPsw"><span class="glyphicon glyphicon-eye-close"></span>&nbsp;&nbsp;修改密码</a></li>
+				  <li><a href="#" class="logout"><span class="glyphicon glyphicon-off logout"></span>&nbsp;&nbsp;退出</a></li>
+			  </ul>
+			  <label>管理员维护</label>
+			  <ul class="list-unstyled">
+				  <li><a href="ADMIN/admin/adminList"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;管理员列表</a></li>
+				  <li><a href="ADMIN/admin/addAdmin"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;添加管理员</a></li>
+			  </ul>
+		    </div>
+	    </div>
+</body>
+<script type="text/javascript">
+    $(".logout").click(function(){
+    	$.ajax({
+    		type:'GET',
+    		url:'ADMIN/admin/logout',
+    		success:function(res){
+    			if(res['code']>0){
+    				layer.msg(
+                    '正在退出', 
+                    {
+                      icon: 6,
+                      time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    },
+                    function(){
+                       window.location.href="ADMIN/admin/login";
+                    });   
+    			}
+    		},
+    		error:function(){
+    			layer.msg('系统出错',{icon:-1});
+    			return false;
+    		}
+    	});
+    });
+</script>

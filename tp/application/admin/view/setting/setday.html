@@ -1,0 +1,71 @@
+{include file="public/setting"}
+<style type="text/css">
+     .page-header-modifyUser{
+      	display: inline-block;
+    	float:left;
+    	width:65%;
+    	height:200px;
+    	border-top:2px solid #eee;
+      }
+      .form-horizontal input{
+      	width:30%;
+      	text-align: center;
+      }
+      .form-group{
+      	padding-left:20%;
+      }
+</style>
+<body>
+ <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">设置</h3>
+
+       <form class="form-horizontal" role="form">
+		  <div class="form-group">
+		    <label for="username" class="col-sm-4 control-label">当前统计总天数</label>
+		    <div class="col-sm-8">
+		      <input type="text" class="form-control" value="{$total}" id="total_day" readonly="readonly">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-4 control-label">新统计天数</label>
+		    <div class="col-sm-8">
+		      <input type="text" class="form-control" id="new_day">
+		    </div>
+		  </div>
+		  <center><button type="button" class="btn btn-success" id="btn-commit">修改</button></center>
+	  </form>
+    </div>
+</body>
+<script type="text/javascript">
+   $('#btn-commit').click(function(){
+   	   var newDay = $("#new_day").val();
+   	   if(newDay!=''){
+           $.ajax({
+           	  type:'POST',
+           	  url:'ADMIN/Seat/setDay',
+           	  data:{
+           	  	newDay:newDay,
+           	  },
+           	  dataType:'JSON',
+           	  success:function(res){
+           	  	if(res['code']>0){
+           	  		layer.msg(res['message'],{icon:1,time:2000},function(){
+           	  			window.location.href="ADMIN/Seat/setDay";
+           	  		});
+           	  	}else{
+           	  		layer.msg(res['message'],{icon:2});
+           	  		return false;
+           	  	}
+           	  },
+           	  error:function(){
+           	  	layer.msg('系统出错',{icon:5});
+           	  	return false;
+           	  }
+
+           });
+   	   }else{
+   	   	   layer.msg('修改内容不能为空',{icon:2});
+   	   	   return false;
+   	   }
+   });
+</script>

@@ -1,0 +1,104 @@
+{include file="public/admin"}
+<style type="text/css">
+
+      .page-header-modifyUser{
+      	display: inline-block;
+      	float:left;
+      	width:65%;
+      	height:250px;
+        border-top:2px solid #eee;
+      }
+      .form-horizontal input{
+      	width:50%;
+      }
+      .form-group{
+      	padding-left:20%;
+      }
+</style>
+<body>
+    <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">修改密码</h3>
+
+       <form class="form-horizontal" role="form">
+  		  <div class="form-group">
+  		    <label for="oldPasswd" class="col-sm-2 control-label">旧密码</label>
+  		    <div class="col-sm-10">
+  		      <input type="password" class="form-control" placeholder="请输入旧密码" id="oldPasswd">
+  		    </div>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="newPasswd" class="col-sm-2 control-label">新密码</label>
+  		    <div class="col-sm-10">
+  		      <input type="password" class="form-control" placeholder="请输入新密码" id="newPasswd">
+  		    </div>
+  		  </div>
+        <div class="form-group">
+          <label for="renewPasswd" class="col-sm-2 control-label">确认密码</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" placeholder="请输入新密码" id="renewPasswd">
+          </div>
+        </div>
+		    <center><button type="button" class="btn btn-success">保存</button></center>
+	    </form>
+    </div>
+</body>
+<script type="text/javascript">
+   $(".btn-success").click(function(){
+       var oldPasswd    = $("#oldPasswd").val();
+       var newPasswd    = $("#newPasswd").val();
+       var renewPasswd  = $("#renewPasswd").val();
+       if(oldPasswd!=""&&newPasswd!=""&&renewPasswd!=""){
+           if(newPasswd != renewPasswd){
+               layer.msg('新密码填写不一致',{icon:2});
+               return false;
+            }else{
+               $.ajax({
+                 type:'POST',
+                 url:'ADMIN/admin/modifyPsw',
+                 data:{
+                   oldPasswd:oldPasswd,
+                   newPasswd:newPasswd,
+                 },
+                 dataType:'json',
+                 success:function(res){
+                   if(res['code']>0){
+                       layer.msg(
+                        '修改成功', 
+                        {
+                          icon: 1,
+                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        },
+                        function(){
+                           window.location.href="ADMIN/admin/index";
+                        });   
+                   }else{
+                      layer.msg('修改失败',{icon:5});
+                      return false;
+                   }
+                 },
+                 error:function(res){
+                  layer.msg('系统出错',{icon:2});
+                  return false;
+                 }
+               });
+             }
+       }else{
+           layer.msg('不能为空',{icon:-1});
+           return false;
+       }
+       
+   });
+</script>
+{include file="public/footer"}
+
+<!--
+icon:
+-1:无
+0:感叹号
+1:打钩
+2:打叉
+3:问号
+4:加锁
+5:哭脸
+6:笑脸
+-->

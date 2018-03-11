@@ -1,0 +1,121 @@
+{include file="public/seat"}
+<style type="text/css">
+   .page-header-modifyUser{
+      	display: inline-block;
+    	float:left;
+    	width:65%;
+    	border-top:2px solid #eee;
+      }
+      .form-horizontal{
+      	margin-top:5%;
+      }
+      .form-horizontal input{
+      	width:50%;
+      }
+      .form-group{
+      	padding-left:20%;
+      }
+      .public-btn{
+          width:50%;
+          height:37px;
+      }
+      .caret{
+      	float: right;
+      }
+      .page-header-result{
+	     display: inline-block;
+	     margin-top:2%;
+	     width: 70%;
+	     float: left;
+      }
+</style>
+<body>
+    <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">座位录入</h3>
+       <h6 class="h6">（提示：只有发布完选座，才能录入）</h6>
+       <form class="form-horizontal" role="form">
+		 <div class="form-group">
+		    <label class="col-sm-2 control-label">学年</label>
+		    <div class="col-sm-10">
+				<select class="form-control public-btn" id="syear">
+                    <option value="0"></option>
+					<option value="1_1">2017-2018-第1学期</option>
+					<option value="1_2">2017-2018-第2学期</option>
+					<option value="2_1">2018-2019-第1学期</option>
+					<option value="2_2">2018-2019-第2学期</option>
+					<option value="3_1">2019-2020-第1学期</option>
+					<option value="3_2">2019-2020-第2学期</option>
+					<option value="4_1">2020-2021-第1学期</option>
+					<option value="4_2">2020-2021-第2学期</option>
+		            <option value="5_1">2021-2022-第1学期</option>
+		            <option value="5_2">2021-2022-第2学期</option>
+		            <option value="6_1">2022-2023-第1学期</option>
+		            <option value="6_2">2022-2023-第2学期</option>
+				</select>
+		    </div>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label class="col-sm-2 control-label" for="number">学号</label>
+		    <div class="col-sm-10">
+		       <input type="text" class="form-control" id="number" placeholder="请输入学号">
+		    </div>
+		  </div>
+		   <div class="form-group">
+		    <label class="col-sm-2 control-label" for="room">自习室</label>
+		    <div class="col-sm-10">
+		       <input type="text" class="form-control" id="room" placeholder="请输入自习室号">
+		    </div>
+		  </div>
+		   <div class="form-group">
+		    <label class="col-sm-2 control-label" for="seatid">座位号</label>
+		    <div class="col-sm-10">
+		       <input type="text" class="form-control" id="seatid" placeholder="请输入座位号">
+		    </div>
+		  </div>
+		  <center><button type="button" class="btn btn-primary btn-commit">添加</button></center>
+	  </form>
+    </div>
+</body>
+{include file="public/footer"}
+<script type="text/javascript">
+    $(".btn-commit").click(function(){
+    	var syear      = $("#syear").val();
+    	var number     = $("#number").val();
+    	var room       = $('#room').val();
+    	var seatid     = $('#seatid').val();
+
+    	if(syear!=''||number!=''||room!=''||seatid!=''){
+
+            $.ajax({
+            	url:"ADMIN/Seat/entering",
+            	type:'POST',
+            	data:{
+            		syear:syear,
+            		number:number,
+            		room:room,
+            		seatid:seatid
+            	},
+            	dataType:'JSON',
+            	success:function(res){
+                    if(res.code>0){
+                    	 layer.alert(res.message,{icon:1,time:2000});
+                        window.location.href='ADMIN/Seat/entering';
+                    }else{
+                        layer.alert(res.message,{icon:2,time:2000});
+                        return false;
+                    }
+                  
+            	},
+            	error:function(res){
+            		layer.msg('系统出错',{icon:5,time:1000},function(){
+                       return false;
+            		});
+            	}
+            });
+    	}else{
+    		layer.msg('填写不能为空',{icon:3});
+            return false;
+    	}
+    });
+</script>

@@ -1,0 +1,31 @@
+{include file="public/main"}
+<style type="text/css">
+    .panel-operation{
+    	display:inline-block;
+    	float:right;
+    	width:30%;
+        height:200px;
+        margin-top:3.5%;
+    }
+</style>
+<script type="text/javascript">
+   var div = document.getElementById('four'); 
+       div.setAttribute("class", "active"); 
+</script>
+<body>
+
+     <div class="panel panel-success panel-operation">
+		    <div class="panel-heading">
+		        <h3 class="panel-title">功能列表</h3>
+		    </div>
+		    <div class="panel-body">
+	          <ul class="list-unstyled list-group-user">
+           		  <li><a href="ADMIN/Setting/qrcode"><span class="glyphicon glyphicon-qrcode"></span>&nbsp;&nbsp;二维码</a></li>
+				  <li><a href="ADMIN/Setting/publish"><span class="glyphicon glyphicon-open"></span>&nbsp;&nbsp;发布新选座</a></li>
+          <li><a href="ADMIN/Setting/importe"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;导入名单</a></li>
+				  <li><a href="ADMIN/Setting/setDay"><span class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;设置</a></li>
+
+			  </ul>
+		    </div>
+	</div>
+</body>
