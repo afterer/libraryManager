@@ -4,6 +4,8 @@ use think\Db;
 use app\admin\model\Publish as PublishModel;
 use app\admin\model\Room as RoomModel;
 use app\admin\model\Seat as SeatModel;
+use app\admin\model\Student as StudentModel;
+use app\admin\model\Fixed as FixedModel;
 
 class Setting{
 	    //选座时间，新选座
@@ -19,31 +21,27 @@ class Setting{
            }
       }
      //选座的自习室房间 写入seat_room
-     public function saveRoom($array=array(),$syear=''){
-     	$room  = new RoomModel();
-     	$data['room_year']=$syear;
-     	if(is_array($array)){
-     		foreach($array as $v){
-     			foreach($v as $k=>$r){
-                   if($k==2){
-                      $data['room_id']     = $r;
-                   }else if($k==3){
-                   	  $data['room_number'] = $r;
-                   }else if($k==4){
-                   	  $data['room_usage']  = $r=='考研'?1:2;
-                   }
-     			}
-            $id = $room->insert($data);
-     		}
-     	return $id;
-     	}
-     	return false;
+     public function saveRoom(){
+     	  $room  = new RoomModel();
+        $fixed = new FixedModel();
+        $year  = $this->getYear();
+        $data  = $fixed->select();
+        $array = array();
+        foreach($data as $k=>$v){
+            $array = array("room_year"=>$year['pid'],"room_id"=>$v['room'],"room_number"=>$v['total'],"room_usage"=>$v['usage']);
+            $id    = $room->insert($array);
+        }
+        if($id)
+          return true;
+        else
+          return false;
      }
      //将 新选座信息写入 seat 表中
-     public function saveSeat($data){
+     public function saveSeat(){
         $seat  = new SeatModel();
-        $year  = $this->getTimer();
-        $array['seat_year'] =$year['syear'];
+        $year  = $this->getYear();
+        $data  = $this->getRoomInfo($year['pid']);
+        $array['seat_year'] =$year['pid'];
         if(is_array($data)){
            foreach($data as $v){
               for($i=1;$i<=$v['room_number'];$i++){
@@ -61,13 +59,54 @@ class Setting{
         $data   = $room->where(array('room_year'=>$syear))->select();
         return $data;
      }
-    //查找选座的本年度
-    public  function getTimer(){
-        $publish  = new PublishModel();
-        //$id       = $publish->max('pid');
-        $timer    = $publish->order('pid desc')->find();
-        return $timer;
+     //获取房间信息
+    public function getHistoryRoom(){
+      $room  = new RoomModel();
+      $year  = $this->getYear();
+      $data  = $room->where(array("room_year"=>$year['pid']))->select();
+      return $data;
     }
+	public function insertOneData($data=array()){
+		$student  = new StudentModel();
+    $arrayid  = array();
+		if(is_array($data)){
+      if($data['number']!=""){
+        $arrayid['number']=$data['number'];
+      }else if($data['name']){
+        $arrayid['name']=$data['name'];
+      }else if($data['college']!=0){
+        $arrayid['college']=$data['college'];
+      }else if($data['idcard']!=""){
+        $arrayid['idcard'] = $data['idcrad'];
+      }else if($data['major']!=""){
+        $arrayid['major'] = $data['major'];
+      }else if($data['phone']!=""){
+        $arrayid['phone'] = $data['phone'];
+      }
+			$res  = $student->insert($arrayid);
+			return $res;
+		}
+	}
+  public function getFixedRoom(){
+    $fixed  = new FixedModel();
+    $data   = $fixed->select();
+    return $data;
+  }
+  //获取最新年份
+  public function getYear(){
+    $publish  = new PublishModel();
+    $year     = $publish->order("pid desc")->find();
+    return $year;
+  }
+  //更新时间
+  public function updateTimer($array=array()){
+    $publish  = new PublishModel();
+    $data     = array("stimer"=>$array['stimer'],"etimer"=>$array['etimer'],"ctimer"=>date('Y-m-d H:i:s',time()));
+    if(is_array($array)){
+      $id  = $publish->where(array('syear'=>$array['syear']))->update($data);
+      return $id;
+    }
+  }
 
 }
 ?>

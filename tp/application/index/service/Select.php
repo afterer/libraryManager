@@ -13,8 +13,8 @@ class Select{
 	//获取自习室的信息
     public function getRoomInfo($usage){
     	$room   = new RoomModel();
-        $year   = $this->getYear();
-        $array  = array("room_year"=>$year,'room_usage'=>$usage);
+      $year   = $this->getYear();
+      $array  = array("room_year"=>$year,'room_usage'=>$usage);
     	$data   = $room->where($array)->select();
     	return $data;
     }
@@ -34,8 +34,6 @@ class Select{
      */
     public function saveStudentSeatInfo($studentNumber,$roomId,$seatId){
        $seat     = new SeatModel();
-       $room     = new RoomModel();
-       $sure     = new SureModel();
        $year     = $this->getYear();
        $array    = array('seat_year'=>$year,'seat_id'=>$seatId,'seat_room'=>$roomId);
        $arrayid  = array('room_year'=>$year,'room_id'=>$roomId);
@@ -46,14 +44,13 @@ class Select{
                 'seat_own'=>$studentNumber,
                 'seat_state'=>1
           );
-          $seat->startTrans();
+          Db::startTrans();
           try{
-             $seat->where($array)->update($data);
-             $room->where($arrayid)->setInc('seat_changed',1);
-             $sure->insert(array("number"=>$studentNumber,"year"=>$year,"status"=>1));
-             $this->seatIsFull($roomId,$year);//判断自习室是否已满
-             $seat->commit();   
-             return true;
+            Db::table("seat_seat")->where($array)->update($data);
+            Db::table("seat_sure")->insert(array("number"=>$studentNumber,"year"=>$year,"status"=>1));
+            $this->seatIsFull($roomId,$year);
+            Db::commit();
+            return true;
           }catch(Exception $e){
              $seat->rollback();
              return false;
@@ -66,11 +63,14 @@ class Select{
      //增加已选座位数量
     public function seatIsFull($roomid,$year){
         $room   = new RoomModel();
-        $array  = array('room_year'=>$year,'room_id'=>$roomid);
-        $num    = $room->where($array)->field('room_number,seat_changed')->find();
-        if($num['room_number'] == $num['seat_changed']){
-          $room->where($array)->update(array('room_state'=>1));
-        }
+        $seat   = new SeatModel();
+        $array  = array("seat_year"=>$year,"seat_room"=>$roomid,"seat_own"=>array('exp','is null'));
+        $where  = array("room_year"=>$year,"room_id"=>$roomid);
+        $num    = $seat->where($array)->count();
+        $total  = $room->where($where)->value("room_number");
+        if($num==$total){
+          $room->where($where)->update(array("room_state"=>1));
+        }    
     }
     //通过 roomid获取房间信息
     public function getRoomById($roomid){
@@ -94,7 +94,7 @@ class Select{
         $publish  = new PublishModel();
         //$id       = $publish->max('pid');
         $year     = $publish->order('pid desc')->find();
-        return $year['syear'];
+        return $year['pid'];
     }
     public function getTimeArrange(){
       $publish  = new PublishModel();

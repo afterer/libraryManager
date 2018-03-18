@@ -4,33 +4,38 @@
           padding: 0 0;
           /*background-color: #fff;*/
          }
-         .layui-carousel img{
-           width:100%;
-           height:100%;
+         .login-header{
+            width:100%;
+            height:50px;
+            line-height:50px;
+            color:#fff;
+            margin-top:20%;
+            background-color:#5BC0DE;
          }
          .check-form{
-           margin-top:25%;
+           width:95%;
+           height:auto;
+           margin-left:2.5%;
+           background-color:#fff;
+           border:1px solid #eee;
+         }
+         .form-group{
            margin-left:16%;
+           margin-top:6%;
          }
          .check-form input{
             width:80%;
+            height:42px;
          }
          .btn-submit{
             padding-top:5%; 
-            padding-left:32%;
+            padding-left:20%;
          }
+         
     </style>
 <body>
-    <div class="layui-carousel" id="test1">
-          <div carousel-item>
-            <div><img src="__STATIC__/images/index/2.jpg"></div>
-            <div><img src="__STATIC__/images/index/3.jpg"></div>
-            <div><img src="__STATIC__/images/index/2.jpg"></div>
-            <div><img src="__STATIC__/images/index/3.jpg"></div>
-          </div>
-    </div>
-    <div class="check-form">
-        
+    <div class="login-header h3 text-center">图书馆选座系统</div>
+    <div class="check-form"> 
             <div class="form-group">
               <label for="firstname" class="col-sm-2 control-label">学号</label>
               <div class="col-sm-10">
@@ -57,26 +62,13 @@
   
     </div>
 </body>
-<script>
-layui.use('carousel', function(){
-  var carousel = layui.carousel;
-  //建造实例
-  carousel.render({
-    elem: '#test1',
-    width: '100%', //设置容器宽度
-    height:'200px',
-    arrow: 'always' //始终显示箭头
-    //,anim: 'updown' //切换动画方式
-  });
-});
-</script>
 <script type="text/javascript">
    $("#binding").click(function(){
     var number     = $('#number').val();
     var idcard     = $('#idcard').val();
     var phone      = $('#phone').val();
     
-    if(!number||!idcard||!phone){
+    if(number==''&&idcard==''||phone==''){
       layer.msg("填写不能为空",{icon:2});
       return false;
     }

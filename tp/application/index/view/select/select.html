@@ -42,8 +42,8 @@
 			   <div class="card card-inverse card-primary text-center">
 				  <div class="card-block">
 				    <blockquote class="card-blockquote">
-				      <p>剩余{$list.room_number-$list.seat_changed}个座位</p>
-				      <footer>{$list.room_id}室<cite title="Source Title">&nbsp;&nbsp;可选</cite></footer>
+				      <p>可选座</p>
+				      <footer>{$list.room_id}室<cite title="Source Title">&nbsp;&nbsp;未满</cite></footer>
 				    </blockquote>
 				  </div>
 				</div>
@@ -53,8 +53,8 @@
 				<div class="card card-inverse card-success text-center">
 				  <div class="card-block">
 				    <blockquote class="card-blockquote">
-				      <p>剩余{$list.room_number-$list.seat_changed}个座位</p>
-				      <footer>{$list.room_id}室<cite title="Source Title">&nbsp;&nbsp;暂不能选</cite></footer>
+				      <p>不可选座</p>
+				      <footer>{$list.room_id}室<cite title="Source Title">&nbsp;&nbsp;已满</cite></footer>
 				    </blockquote>
 				  </div>
 				</div>
@@ -63,7 +63,6 @@
 		{/foreach}
     </div>
 	<!--房间列表-end-->
-	<!-- <nav style="text-align:center;font-size:10px;">————已经到底部————</nav> -->
 </div>
 </body>
 <script type="text/javascript" src="__PUBLIC__/mui/js/mui.js"></script>

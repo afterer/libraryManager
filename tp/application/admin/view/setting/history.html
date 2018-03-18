@@ -1,0 +1,69 @@
+{include file="public/setting"}
+<style type="text/css">
+   .page-header-modifyUser{
+      	display: inline-block;
+      	float:left;
+      	width:65%;
+        border-top:2px solid #eee;
+      }
+      .content-page{
+        display: block;
+        text-align: center;
+      }
+      .table{
+        margin-top:2%;
+      }
+      .table tr th,td{
+        text-align:center;
+      }
+</style>
+<body>
+   <div class="page-header page-header-modifyUser">
+      <h3 style="font-weight:bold;">选座列表</h3>
+      
+      <table class="table table-bordered">
+    	  <thead>
+          <tr><th colspan="6" style="text-align:center;">{$syear|getYear=###}&nbsp;&nbsp;学年</th></tr>
+    	    <tr>
+            <th>id</th>
+    	      <th>自习室</th>
+    	      <th>座位数</th>
+    	      <th>满否</th>
+    	      <th>类型</th>
+    	    </tr>
+    	  </thead>
+    	  <tbody>
+          {foreach name="data" item="list"}
+          <tr>
+             <td>{$list.id}</td> 
+             <td>{$list.room_id}</td> 
+             <td>{$list.room_number}</td> 
+             <td>
+                {if condition="$list.room_state eq 0"}
+                <button class="layui-btn layui-btn-normal layui-btn-sm" disabled="disabled">未满</button>
+                {else /}
+                <button class="layui-btn layui-btn-sm" disabled="disabled">已满</button>
+                {/if}
+             </td> 
+             <td>
+                {if condition="$list.room_usage eq 1"}
+                <button class="layui-btn layui-btn-radius layui-btn-warm layui-btn-sm" disabled="disabled">考研</button>
+                {else /}
+                <button class="layui-btn layui-btn-radius layui-btn-danger layui-btn-sm" disabled="disabled">考证</button>
+                {/if}
+             </td> 
+          </tr>
+          {/foreach}
+    	  </tbody>
+		   <tr><th colspan="6" style="text-align:center;">创建时间:{$ctimer}</th></tr>
+    	</table>
+      
+  <div class="content-page"></div>
+   </div>
+</body>
+{include file="public/footer"}
+<script type="text/javascript">
+   
+  
+
+</script>

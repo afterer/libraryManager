@@ -1,92 +1,74 @@
 {include file="public/header"}
-<link rel="stylesheet" type="text/css" href="__PUBLIC__/mui/css/mui.css">
-<style type="text/css">
-    body{
-      background-color: #fff;
-    }
-    .layui-carousel img{
+ <head>
+  <style type="text/css">
+     .layui-carousel img{
            width:100%;
            height:100%;
+         }
+    img { border:0; }
+    ul { 
+      list-style: none outside none; 
+      margin:0; 
+      padding:5% 0; 
     }
-    .choice-btn{
-      margin-top:25%;
-      margin-left:30%;
-    }
-    .mui-slider-item ul li{
-      border:1px solid #fff;
-    }
-    .btn-circle.btn-lg {
-      width: 55px;
-      height: 55px;
-      padding: 10px 16px;
-      font-size: 14px;
-      line-height: 1.33;
-      border-radius: 30px;
-    }
-    .wrap {
-      padding: 10px 0 0 10px;
-      width: 100%;
-      overflow: hidden;
+    body .mainmenu:after { clear: both; content: " "; display: block; }
+
+    body .mainmenu li{ 
+        float:left;
+        margin-left: 2.5%;
+        margin-top: 2.5%;
+        width: 30%;  
+        border-radius:3px; 
+        overflow:hidden;
     }
 
-    .wrap .item {
-      position: relative;
-      display: block;
-      float: left;
-      margin-left: 2%;
-      margin-top: 3%;
-      width: 30%;
-      height: 100px;
-      line-height: 80px;
-      text-align: center;
-      border: 0px solid #ccc;
+    body .mainmenu li a{ display:block;  color:#FFF;   text-align:center }
+    body .mainmenu li a b{ 
+        display:block; height:80px;
+    }
+    body .mainmenu li a img{ 
+        margin: 15px auto 15px;
+        width: 50px;
+        height: 50px;
     }
 
-    .wrap .item:hover {
-      z-index: 2;
-      border-color: #f00;
-    }
-    .wrap .item p{
-      display: inline-block;
-      position: relative;
-      top:-40px;
-    }
-     .nav-tabs .row .home a{
-        color:#5BC0DE;
-    }
-</style>
+    body .mainmenu li a span{ display:block; height:30px; line-height:30px;background-color:#FFF; color: #999; font-size:14px; }
+
+    body .mainmenu li:nth-child(8n+1) {background-color:#F4EA2A}
+    body .mainmenu li:nth-child(8n+2) {background-color:#84d018}
+    body .mainmenu li:nth-child(8n+3) {background-color:#14c760}
+    body .mainmenu li:nth-child(8n+4) {background-color:#36A1DB}
+    body .mainmenu li:nth-child(8n+5) {background-color:#36A1DB}
+    body .mainmenu li:nth-child(8n+6) {background-color:#36A1DB}
+    body .mainmenu li:nth-child(8n+7) {background-color:#ff8a4a}
+    body .mainmenu li:nth-child(8n+8) {background-color:#fc5366}
+   </style>
+</head>
+
 <body>
-   <div class="layui-carousel" id="test1">
+    <div class="layui-carousel" id="test1">
           <div carousel-item>
-            <div><img src="__STATIC__/images/index/2.jpg"></div>
-            <div><img src="__STATIC__/images/index/3.jpg"></div>
-            <div><img src="__STATIC__/images/index/2.jpg"></div>
-            <div><img src="__STATIC__/images/index/3.jpg"></div>
+            <div><img src="__STATIC__/images/index/1.jpg"></div>
+            <div><img src="__STATIC__/images/index/5.jpg"></div>
+            <div><img src="__STATIC__/images/index/6.jpg"></div>
+            <div><img src="__STATIC__/images/index/4.jpg"></div>
           </div>
     </div>
-    <div class="wrap">
-      <div class="item">
-        <a href="APP_MAIN/Index/select"><button type="button" class="btn btn-success btn-circle btn-lg btn-home"><i class="glyphicon glyphicon-home"></i></button><br/><p>首页</p></a>
-      </div>
-      <div class="item">
-        <a href="{:Url('Select/select',['id'=>1]);}"><button type="button" class="btn btn-info btn-circle btn-lg btn-yan"><i class=" glyphicon glyphicon-search"></i></button><br/><p>考研</p></a>
-      </div>
-      <div class="item">
-        <a href="{:Url('Select/select',['id'=>2]);}"><button type="button" class="btn btn-info btn-circle btn-lg btn-zheng"><i class="glyphicon glyphicon-zoom-in"></i></button><br/><p>考证</p></a>
-      </div>
-      <div class="item">
-        <a href="#" id="branch"><button type="button" class="btn btn-warning btn-circle btn-lg btn-one"><i class="glyphicon glyphicon-list-alt"></i></button><br/><p>分馆一</p></a>
-      </div>
-      <div class="item">
-        <a href="#" id="branch"><button type="button" class="btn btn-warning btn-circle btn-lg btn-two"><i class="glyphicon glyphicon-list-alt"></i></button><br/><p>分馆二</p></a>
-      </div>
-      <div class="item">
-        <a href="#" id="branch"><button type="button" class="btn btn-warning btn-circle btn-lg btn-three"><i class="glyphicon glyphicon-list-alt"></i></button><br/><p>分馆三</p></a>
-      </div>
-    </div>
+    <ul class="mainmenu">
+        <li><a href="#" ><b><img src="__STATIC__/images/message.png" /></b><span>我的消息</span></a></li>
+        <li><a href="{:Url('Select/select',['id'=>1]);}" >
+            <b><img src="__STATIC__/images/search.png" /></b><span>我要考研</span></a>
+        </li>
+        <li><a href="{:Url('Select/select',['id'=>2]);}" >
+            <b><img src="__STATIC__/images/wxb.png" /></b><span>我要考证</span></a>
+        </li>
+        <li><a href="#" id="branch1"><b><img src="__STATIC__/images/supply.png" /></b><span>分馆一</span></a></li>
+        <li><a href="#" id="branch2"><b><img src="__STATIC__/images/supply.png" /></b><span>分馆二</span></a></li>
+        <li><a href="#" id="branch3"><b><img src="__STATIC__/images/supply.png" /></b><span>分馆三</span></a></li>         
+    </ul>
 </body>
 {include file="public/footer"}
-<script type="text/javascript" src="__PUBLIC__/mui/js/mui.js"></script>
+
 <script type="text/javascript">
 layui.use('carousel', function(){
   var carousel = layui.carousel;
@@ -99,7 +81,13 @@ layui.use('carousel', function(){
     //,anim: 'updown' //切换动画方式
   });
 });    
-  $("#branch").click(function(){
+  $("#branch1").click(function(){
      layer.msg("敬请期待",{icon:6,time:2000});
   });  
+  $("#branch2").click(function(){
+     layer.msg("别太期待",{icon:6,time:2000});
+  });
+  $("#branch3").click(function(){
+     layer.msg("不期待了",{icon:5,time:2000});
+  });
 </script>

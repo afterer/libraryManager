@@ -17,8 +17,6 @@ class Search extends Base{
                 $array['college'] = $_POST['institute'];
             }else if(!empty($_POST['major'])){
                 $array['major']     = $_POST['major'];
-            }else if(!empty($_POST['grade'])){
-                $array['grade']     = $_POST['grade'];
             }else if(!empty($_POST['number'])){
                 $array['number']    = $_POST['number'];
             }else if(!empty($_POST['name'])){
@@ -45,11 +43,10 @@ class Search extends Base{
         $search   = new SearchModel();
         if(request()->isAjax()){
             $array    = array(
-                'branchid'=>$_POST['branchid'],
-                'seatid'=>$_POST['seatid']
+                'roomid'=>$_POST['roomid'],
+                'seatid'=>$_POST['seatid'],
             );
             $data     = $search->getDataBySeat($array);
-            
             if($data){
                 return json(array("code"=>1,"message"=>"查询成功","data"=>$data));
             }

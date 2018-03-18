@@ -38,7 +38,7 @@
 		    <label class="col-sm-2 control-label">学年</label>
 		    <div class="col-sm-10">
 				<select class="form-control public-btn" id="syear">
-                    <option value="0"></option>
+          <option value="0"></option>
 					<option value="1_1">2017-2018-第1学期</option>
 					<option value="1_2">2017-2018-第2学期</option>
 					<option value="2_1">2018-2019-第1学期</option>
@@ -47,10 +47,10 @@
 					<option value="3_2">2019-2020-第2学期</option>
 					<option value="4_1">2020-2021-第1学期</option>
 					<option value="4_2">2020-2021-第2学期</option>
-		            <option value="5_1">2021-2022-第1学期</option>
-		            <option value="5_2">2021-2022-第2学期</option>
-		            <option value="6_1">2022-2023-第1学期</option>
-		            <option value="6_2">2022-2023-第2学期</option>
+          <option value="5_1">2021-2022-第1学期</option>
+          <option value="5_2">2021-2022-第2学期</option>
+          <option value="6_1">2022-2023-第1学期</option>
+          <option value="6_2">2022-2023-第2学期</option>
 				</select>
 		    </div>
 		  </div>
@@ -85,7 +85,7 @@
     	var room       = $('#room').val();
     	var seatid     = $('#seatid').val();
 
-    	if(syear!=''||number!=''||room!=''||seatid!=''){
+    	if(syear!=0&&number!=''&&room!=''&&seatid!=''){
 
             $.ajax({
             	url:"ADMIN/Seat/entering",
@@ -99,8 +99,10 @@
             	dataType:'JSON',
             	success:function(res){
                     if(res.code>0){
-                    	 layer.alert(res.message,{icon:1,time:2000});
+                    	 layer.alert(res.message,{icon:1,time:2000},function(){
                         window.location.href='ADMIN/Seat/entering';
+                       });
+                        
                     }else{
                         layer.alert(res.message,{icon:2,time:2000});
                         return false;

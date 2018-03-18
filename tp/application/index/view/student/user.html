@@ -7,49 +7,57 @@
         .mui-bar{
        	    background-color: #fff;
        }
-       .mui-scroll-wrapper{
-       	    margin-top:10%;
+       .user-list{
+       	 font-size:18px;
+       	 margin-top:15%;
+       	 background-color:#fff;
        }
-       .mui-scroll ul{
-       	    margin-top:5%;
-       	    background-color:#DCDCDC;
+       .menu-list{
+       	 width:95%;
+       	 height:auto;
+       	 margin:10px 10px;
+       	 border-top:1px solid #eee;
+       	 border-right:1px solid #eee;
+       	 border-left:1px solid #eee;
+       	 list-style:none;
        }
+       .menu-list a{
+       	height:45px;
+       	width:100%;
+       	text-decoration:none;
+       	color:#222;
+       }
+       .menu-bar{
+         height:45px;
+         width:100%;
+         border-bottom:1px solid #eee;
+		 line-height:45px;   
+		 overflow:hidden;   
+		 padding-left:2%;
+       }
+      .menu-list font{
+      	float:right;
+      	padding-right:5%;
+      }
 </style>
 <body>
     <div class="mui-navbar-inner mui-bar mui-bar-nav">
 		<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 			<span class="mui-icon mui-icon-left-nav"></span>个人
 		</button>
-		<h1 class="mui-center mui-title">账号信息</h1>
+		<h1 class="mui-center mui-title">我的信息</h1>
 	</div>
-	<div class="mui-page-content">
-		<div class="mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell">
-						<a id="head" class="mui-navigate-right">学号
-						<span class="mui-pull-right head">
-							{$data["number"]}
-						</span>
-					</a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a>姓名<span class="mui-pull-right">{$data["name"]}</span></a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a>手机号<span class="mui-pull-right">{$data["phone"]}</span></a>
-					</li>
-				</ul>
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell">
-						<a>学院<span class="mui-pull-right">{$data["college"]|getInstitute=###}</span></a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a>专业<span class="mui-pull-right">{$data["major"]}</span></a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	 <div class="user-list">
+       <ul class="menu-list">
+          <li class="menu-bar">学号<font>{$data['number']}</font></li>
+          <li class="menu-bar">姓名<font>{$data['name']}</font></li>
+          <li class="menu-bar">手机<font>{$data['phone']}</font></li>
+       </ul>
+       <ul class="menu-list">
+          <li class="menu-bar">学院<font>{$data['college']|getInstitute=###}</font></li>
+          <li class="menu-bar">专业<font>{$data['major']}</font></li>
+       </ul>
+
+    </div>
 </body>
 <script src="__PUBLIC__/mui/js/mui.min.js"></script>

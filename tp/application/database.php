@@ -13,13 +13,13 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '10.0.16.30',
+    'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => 'zxs_lib',
+    'database'        => 'zhbit_seat',
     // 用户名
-    'username'        => 'zxs_lib',
+    'username'        => 'root',
     // 密码
-    'password'        => 'FFfi84aBKi',
+    'password'        => '',
     // 端口
     'hostport'        => '3306',
     // 连接dsn

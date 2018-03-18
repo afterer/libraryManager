@@ -10,10 +10,38 @@
        .mui-scroll-wrapper{
        	    margin-top:10%;
        }
-       .mui-scroll ul{
-       	    margin-top:5%;
-       	    background-color:#DCDCDC;
+        .user-list{
+       	 font-size:18px;
+       	 margin-top:15%;
+       	 background-color:#fff;
        }
+       .menu-list{
+       	 width:95%;
+       	 height:auto;
+       	 margin:10px 10px;
+       	 border-top:1px solid #eee;
+       	 border-right:1px solid #eee;
+       	 border-left:1px solid #eee;
+       	 list-style:none;
+       }
+       .menu-list a{
+       	height:45px;
+       	width:100%;
+       	text-decoration:none;
+       	color:#222;
+       }
+       .menu-bar{
+         height:45px;
+         width:100%;
+         border-bottom:1px solid #eee;
+		 line-height:45px;   
+		 overflow:hidden;   
+		 padding-left:2%;
+       }
+      .menu-list font{
+      	float:right;
+      	padding-right:5%;
+      }
 </style>
 <body>
     <div class="mui-navbar-inner mui-bar mui-bar-nav">
@@ -22,22 +50,12 @@
 		</button>
 		<h1 class="mui-center mui-title">关于图书馆</h1>
 	</div>
-	<div class="mui-page-content">
-		<div class="mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell">
-						<a>联系电话<span class="mui-pull-right">0756-756031</span></a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a>开发人员<span class="mui-pull-right">Afterer</span></a>
-					</li>
-					<li class="mui-table-view-cell">
-						<a href="#notifications" class="mui-navigate-right">问题反馈</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+    <div class="user-list">
+       <ul class="menu-list">
+          <li class="menu-bar">联系电话<font>0756-756031</font></li>
+          <li class="menu-bar">开发人员<font>Afterer</font></li>
+          <li class="menu-bar">问题反馈<font></font></li>
+       </ul>
+    </div>
 </body>
 <script src="__PUBLIC__/mui/js/mui.min.js"></script>

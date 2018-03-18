@@ -1,0 +1,168 @@
+{include file="public/header"}
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/mui/css/mui.css">
+        <link rel="stylesheet" type="text/css" href="__STATIC__/css/bootstrap.css">
+        <style type="text/css">
+            html{
+            	background-color:#fff;
+            }
+            .mui-bar{
+                background-color:#fff;
+            }
+            .seat{
+            	width:100%;
+            	height:auto;
+            	margin-top:15%;
+            	position:relative;
+            }
+            .seat-ul{
+            	position: relative;
+            	width:95%;
+            	height:auto;
+                margin-left:2.5%;
+            	border:1px solid #ccc;
+            	list-style:none;
+            }
+            .seat-li{
+            	position: relative;
+            	width:54px;
+            	height:49px;
+            	float:left;
+            	border:1px solid #eee;
+            	margin-left:2%;
+            	margin-top:2%;
+            }
+            .seat-li img{
+            	position:absolute; 
+            	width:54px;
+            	height:49px;
+            	top:0px;
+            	left:0px;
+            	z-index: 0;
+            }
+            .seatid{
+            	display:block;
+            	position:absolute; 
+            	top:0px;
+            	left:0px;
+            	height:100%;
+            	width:100%;
+            	text-align:center;
+            	z-index:99;
+            	line-height:49px;
+            	font-size:18px;
+            	color:#555;
+            }
+            .seat-footer{
+            	width:100%;
+            	height:55px;
+            	position:fixed;
+            	bottom:0px;
+            	border:1px solid #eee;
+            	line-height:55px;
+            	background-color:#fcfcfc;
+            	font-weight:bold;
+            }
+            .seat-text{
+            	display: inline-block;
+            	width:100%;
+            	padding-left:5%;
+            	font-size:18px;
+            }
+            .btn{
+            	float:right;
+            	margin-right:5%;
+            	margin-top:2%;
+            }
+        </style>
+    </head>    
+    <body>
+        <div class="mui-navbar-inner mui-bar mui-bar-nav">
+            <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+                <span class="mui-icon mui-icon-left-nav" style="font-size:17px;">
+                 考研
+                </span>
+            </button>
+            <h1 class="mui-center mui-title">{$room.room_id}</h1>
+        </div>
+        <div class="seat">
+           <ul class="seat-ul">
+           {foreach name="data" item="list"}
+              <li class="seat-li" onclick="seatOnclick({$list.seat_id})">
+                <img src="__STATIC__/images/seat.png" id="seat{$list.seat_id}"/>
+                <div class="seatid">{$list.seat_id}</div>
+              </li>
+            {/foreach}
+           </ul>
+        </div>
+        <div class="seat-footer">
+             <div class="seat-text">已选：{$room.room_id}室<b id="seat-id">0</b>号<button class="btn btn-xs btn-info">确定</button></div>
+        </div>
+    </body>
+<script type="text/javascript">
+        var globalId=0;
+        var globalseatid  =0;
+       	function seatOnclick(id){
+       		globalseatid = id;
+       		var seatid   = 'seat'+id;
+       		var lastseat = 'seat'+globalId;
+       		var imgObj   = document.getElementById(seatid);
+			if(imgObj.getAttribute("src",1)=="__STATIC__/images/seat.png"){
+				imgObj.src="__STATIC__/images/noseat.png";
+			}else if(imgObj.getAttribute("src",1)=="__STATIC__/images/selected.png"){
+                imgObj.src="__STATIC__/images/selected.png"; 
+			}else{
+				imgObj.src="__STATIC__/images/seat.png";
+			}
+			if(globalId!=0){
+				var lastObj  = document.getElementById(lastseat);
+				if(lastObj.getAttribute("src",1)=="__STATIC__/images/noseat.png"){
+					lastObj.src="__STATIC__/images/seat.png";
+				}
+			}
+			globalId  = id;
+			$("#seat-id").text(id);
+       	}
+</script>
+<script type="text/javascript">
+       var seated  = "{$choosed}";
+       seated      = seated.split(",");
+       for(var i=0;i<seated.length;i++){
+       	 var seatto       = 'seat'+seated[i];
+         var choosedImg   = document.getElementById(seatto);
+         choosedImg.src="__STATIC__/images/selected.png";
+       }    
+</script>
+<script type="text/javascript">
+    $(".btn").click(function(){
+	   	 var myseatid  = $("#seat-id").text();
+	   	 $.ajax({
+	   	 	url:'APP_MAIN/Select/seatSure',
+	   	 	type:'POST',
+	   	 	data:{
+	   	 		seatid:myseatid,
+	   	 		roomid:{$room.room_id},
+	   	 		usage:{$room.room_usage}
+	   	 	},
+            dataType:'JSON',
+            success:function(res){
+               if(res.code>0){
+                  layer.msg(res.message,{icon:1,time:2000},function(){
+                     location.href='APP_MAIN/Student/info67';
+                  });
+               }else{
+               	   layer.msg(res.message,{icon:2,time:2000},function(){
+                     return false;
+                  });
+               }
+            },
+            error:function(){
+               layer.msg('系统出错',{icon:5,time:2000},function(){
+               	return false;
+               });
+            }
+	   	 });
+	});
+</script>
+</html>

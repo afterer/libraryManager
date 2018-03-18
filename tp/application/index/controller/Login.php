@@ -24,6 +24,7 @@ class Login extends Controller{
                 Session::set("number",$studentNo);
                 Session::set("binding",true);
                 Cookie::set("number",$studentNo);
+                Session::set("expire",time()+86400);
                 return json(array("code"=>1,"message"=>"绑定成功"));
             }else{
                 return json(array("code"=>0,"message"=>"绑定失败"));

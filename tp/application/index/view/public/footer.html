@@ -1,49 +1,70 @@
 <style type="text/css">
-    .mui-bar{
-        background-color: #fff;
-    }
-    .nav-tabs
-    {
-        text-align: center;
-        height: 35px;
-        line-height: 40px;
-        border-bottom-width:0px;
-    }
-    .nav-tabs .row li a{
-        color:#747474;
-        text-decoration: none;
-    }
+    .menu {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 45px;
+            color: #474747;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            background-color: #fff;
+            font-size:17px;
+        }
+
+        .subMenu {
+            width: 50%;
+            float: left;
+            height:100%;
+            cursor: pointer;
+            border-right:1px solid #eee;
+        }
+
+        .menu_name {
+            height: 30px;
+            width: 100%;
+            line-height: 30px;
+        }
+
+        img.menu_img {
+            height: 25px;
+            width: 25px;
+        }
+
+        img {
+            vertical-align: middle;
+            border: 0;
+        }
+
+        .active {
+            color: #FFA129;
+            
+        }
+
+        .text-center {
+            text-align: center
+        }
 </style>
-<div class="footer"><!-- 
-<nav class="mui-bar mui-bar-tab">
-		<a id="defaultTab" class="mui-tab-item mui-active" href="tab-webview-subpage-about.html">
-			<span class="mui-icon mui-icon-home"></span>
-			<span class="mui-tab-label">首页</span>
-		</a>
-		<a class="mui-tab-item" href="tab-webview-subpage-contact.html">
-			<span class="mui-icon mui-icon-contact"></span>
-			<span class="mui-tab-label">个人</span>
-		</a>
-</nav> -->
-<div class="main_nav_bottom">
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container" align="center">
-                <ul class="nav nav-tabs nav-tabs-justified">
-                    <div class="row" align="center">
-                        <div class="col-md-6 col-sm-6 col-xs-6" align="center">
-                        <li class="home"><a href="APP_MAIN/Index/select"><span class="glyphicon glyphicon-home"></span>主页</a></li>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-6" align="center">
-                        <li class="user"><a href="APP_MAIN/Index/index"><span class="glyphicon glyphicon-user"></span>个人</a></li>
-                        </div>
-                    </div>
-                </ul>
-            </div>
-        </nav>
+<!--bottom-->
+<div id="menu" class="menu">
+    <div id="one" class="subMenu text-center" data-src="charger.html">
+        <img src="__STATIC__/images/home.png" class="menu_img"/>&nbsp;&nbsp;主页
+        <div class="menu_name"></div>
+    </div>
+    <div id="two" class="subMenu text-center">
+        <img src="__STATIC__/images/user.png" class="menu_img"/>&nbsp;&nbsp;个人
+        <div class="menu_name"></div>
+    </div>
 </div>  
-</div>
 <script type="text/javascript">
-     // mui.init();
+    $("#one").click(function(){
+        location.href='APP_MAIN/Index/Select';
+        $(this).addClass("active");
+    });
+     $("#two").click(function(){
+        location.href='APP_MAIN/Index/index';
+        $(this).addClass("active");
+    });
     
 </script>
 </html>

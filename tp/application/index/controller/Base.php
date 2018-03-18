@@ -20,11 +20,13 @@ class Base extends Controller{
 		
 		$checked   = Session::get('binding');
 		$cnumber   = Cookie::get('number');
-		//$expire    = Session::get('expire');
+		$expire    = Session::get('expire');
 		if(!$checked||!$cnumber){
-            
            $this->error('请先登录','index/Login/login',1);
-         }
+        }else{
+        	if($expire-time()<1000)
+        		Session::set("expire",time()+3600);
+        }
 		
 	}
 	

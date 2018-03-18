@@ -1,5 +1,149 @@
-﻿{include file="public/setting"}<style type="text/css">    .page-header-modifyUser{      	display: inline-block;      	float:left;      	width:65%;      	height:100%;        border-top:2px solid #eee;      }      .form-horizontal input{      	width:50%;      }      .form-group{      	padding-left:20%;        padding-bottom:5%;      }      .public-btn{      	width:50%;      }      .mytable{      	width:100%;      }      .mytable th,td{      	text-align:center;      	border:1px solid #eee;      }      .list-btn li{      	list-style:none;      	float:left;      	padding-left:5px;      }      .list-btn li input{      	width:80px;      }      .btn-pubilsh{        margin-top:2%;      }</style><link rel="stylesheet" type="text/css" href="__STATIC__/css/superTables.css"><script type="text/javascript" src="__STATIC__/js/jquery-1.4.4.min.js" ></script><script type="text/javascript" src="__STATIC__/js/jFixed.min.js"></script><script type="text/javascript">    $(function() {    var i = 1;    var da = { pkey: [{ key: "num", value: i}], value: [[{ key: 1, value: '' }, { key: 2, value: i }, { key: 1, value: '703' }, { key: 1, value: '32' }, { key: 1, value: '考研' }]] };    var op = { data: da, headerRows: 2 };    $.jtool.loaddata("tabProduct", op);    $("#tabProduct").jFixedtable({ colums: [{ name: "num"}], fixedCols: 1, width: "550", height: "300", headerRows: 2, pkey: ["num"], edit: true });    i += 1    $("#add").click(function() {        var da = { pkey: [{ key: "num", value: i}], value: [[{ key: 1, value: '' }, { key: 2, value: i }, { key: 1, value: '703' }, { key: 1, value: '32' }, { key: 1, value: '考研' }]]};        var op = { data: da };        i++;        $.jtool.addRow('tabProduct', op);    });	});    function gettr() {        var trs = $.jtool.getchangetr();        for (var i = 0; i < trs.length; i++) {            var tr = trs[i];             var pk = eval(tr.pkey);            for (var j = 0; j < pk.length; j++) {                //alert("修改行主键："+);                layer.confirm('修改行主键：'+pk[j].key+"="+pk[j].value, {				  btn: ['确定','取消'] //按钮				}, function(){				  layer.msg('已经修改', {icon: 1});				}, function(){				  layer.msg('取消修改', {				    icon:6				  });				});            }            var values = tr.values;        }    }    function del(key) {        //alert(key.length);        for (var i = 0; i < key.length; i++) {            var pkey = key[i];            for (var j = 0; j < pkey.length; j++) {    //             layer.confirm('确定删除？'+pkey[j].key + ":" + pkey[j].value, {				//   btn: ['确定','取消'] //按钮				// }, function(){				//   layer.msg('删除成功', {icon: 1});				// }, function(){				//   layer.msg('删除失败', {				//     time: 2000, //20s后自动关闭				//     icon:5				//   });				// });            }        }        return true;           }</script><body>   <div class="page-header page-header-modifyUser">    <h3 style="font-weight:bold;">发布新选座</h3>        		   <div class="form-group">		    <label class="col-sm-2 control-label">学年</label>		    <div class="col-sm-10">				<select class="form-control public-btn" id="syear">                    <option value="0"></option>					<option value="1_1">2017-2018-第1学期</option>          <option value="1_2">2017-2018-第2学期</option>					<option value="2_1">2018-2019-第1学期</option>          <option value="2_2">2018-2019-第2学期</option>					<option value="3_1">2019-2020-第1学期</option>          <option value="3_2">2019-2020-第2学期</option>					<option value="4_1">2020-2021-第1学期</option>          <option value="4_2">2019-2020-第2学期</option>					<option value="5_1">2021-2022-第1学期</option>          <option value="5_2">2021-2022-第2学期</option>					<option value="6_1">2022-2023-第1学期</option>					<option value="6_2">2022-2023-第2学期</option>				</select>		    </div>		  </div>  		  <div class="form-group">  		    <label class="col-sm-2 control-label">开始时间</label>	  		    <div class="col-sm-10">	  		        <input type="text" class="layui-input public-btn" id="stimer" placeholder="yyyy-MM-dd HH:mm:ss">	  		    </div>  		  </div>  		    <div class="form-group">  		    <label class="col-sm-2 control-label">结束时间</label>	  		    <div class="col-sm-10">	  		        <input type="text" class="layui-input public-btn" id="etimer" placeholder="yyyy-MM-dd HH:mm:ss">	  		    </div>  		  </div>  		   <div class="form-group">  		    <label class="col-sm-2 control-label">使用范围</label>	  		    <div class="col-sm-10">		  		    <table class="mytable" id="tabProduct">	                   <tr>					      <td  name="num" style="width:30px"><input type="checkbox" name="checkbox" value="checkbox"/></td>					      <td  name="num"  bgcolor="#EFEFEF">序号</td>					      <td  name="seat" bgcolor="#EFEFEF" EditType="TextBox">自习室</td>					      <td  name="amount" EditType="TextBox"  bgcolor="#EFEFEF">数量</td>					      <td  name="range" EditType="DropDownList" DataItems="{text:'考研',value:'考研'},{text:'考证',value:'考证'}"  bgcolor="#EFEFEF">范围</td>					    </tr>					    <tr>					      					    </tr>	  		     	</table>	  		     	</br>	  		     	<p>	  		     	<ul class="list-btn">                       <li><input id="add" type="button" name="add" value="新增"/></li>                       <li><input type="button" name="Submit2" value="删除" onclick="$.jtool.deleteRow('tabProduct',del)" /></li>                       <li><input type="button" name="Submit2" value="修改" onclick="gettr();" /></li>                       <li><input type="button" name="Submit22" value="重置" onclick="window.location.reload()" /></li>	  		     	</ul>                   				  			     	</p>	  		    </div>	  	   </div>	  	  <center><button type="button" class="btn btn-success btn-pubilsh">发布</button></center>    </div></body><script>layui.use('laydate', function(){  var laydate = layui.laydate;  laydate.render({      elem: '#stimer',      type: 'datetime'    });  laydate.render({      elem: '#etimer',      type: 'datetime'    });});</script><script type="text/javascript">   $(".btn-pubilsh").click(function(){   	   var syear    =$('#syear').val();       var stimer   =$('#stimer').val();       var etimer   =$('#etimer').val();       var html     = new Array();       var content  = new Array();
+﻿{include file="public/setting"}
+<style type="text/css">    
+    .page-header-modifyUser{      	
+        display: inline-block;      	
+		float:left;      	
+		width:65%;      	
+		height:100%;        
+		border-top:2px solid #eee;      
+	}      
+    .form-horizontal input{      	
+        width:50%;      
+	}      
+	.form-group{      	
+	    padding-left:20%;       
+		padding-bottom:5%;      
+	}      
+	.public-btn{      	
+		width:50%;      
+	}      
+	.mytable{      
+		width:100%;      
+	}      
+	.mytable th,td{      	
+		text-align:center;      	
+		border:1px solid #eee;      
+	}      
+	.list-btn li{      	
+		list-style:none;      	
+		float:left;      	
+		padding-left:5px;      
+	}      
+	.list-btn li input{      	
+		width:80px;      
+	}      
+	.btn-pubilsh{        
+		margin-top:2%;      
+	}
+	</style>
+		<body>   <div class="page-header page-header-modifyUser">    <h3 style="font-weight:bold;">发布新选座</h3> 
+		<div class="form-group">		    
+		<label class="col-sm-2 control-label">学年</label>		    
+			<div class="col-sm-10">				
+			<select class="form-control public-btn" id="syear">                    
+				<option value="0"></option>					
+				<option value="1_1">2017-2018-第1学期</option>          
+				<option value="1_2">2017-2018-第2学期</option>					
+				<option value="2_1">2018-2019-第1学期</option>          
+				<option value="2_2">2018-2019-第2学期</option>					
+				<option value="3_1">2019-2020-第1学期</option>          
+				<option value="3_2">2019-2020-第2学期</option>					
+				<option value="4_1">2020-2021-第1学期</option>          
+				<option value="4_2">2019-2020-第2学期</option>					
+				<option value="5_1">2021-2022-第1学期</option>          
+				<option value="5_2">2021-2022-第2学期</option>					
+				<option value="6_1">2022-2023-第1学期</option>					
+				<option value="6_2">2022-2023-第2学期</option>				
+			</select>		    
+			</div>		  
+		</div>  		  
+		<div class="form-group">  		    
+			<label class="col-sm-2 control-label">开始时间</label>	  		    
+				<div class="col-sm-10">	  		    
+				<input type="text" class="layui-input public-btn" id="stimer" placeholder="yyyy-MM-dd HH:mm:ss">
+				</div>  		  
+			</div>  		    
+			<div class="form-group">  		    
+			<label class="col-sm-2 control-label">结束时间</label>	  		    
+			<div class="col-sm-10">	  		        
+			<input type="text" class="layui-input public-btn" id="etimer" placeholder="yyyy-MM-dd HH:mm:ss">	  		    
+			</div>  		  
+		</div>  		   
+		<div class="form-group">  		    
+			<label class="col-sm-2 control-label">使用范围</label>	  		    
+			<div class="col-sm-10">		  		    
+				<table class="table table-bordered">
+                   <tr>
+                      <th>id</th>
+                      <th>自习室</th>
+                      <th>数量</th>
+                      <th>类别</th>
+                   </tr>
+                   {foreach name="roomdata" item="list"}
+                   <tr>
+                     <td>{$list.id}</td>
+                     <td>{$list.room}</td>
+                     <td>{$list.total}</td>
+                     <td>
+                        {if condition="$list.usage eq 1"}
+                        <button class="layui-btn layui-btn-radius layui-btn-normal">考研</button>
+                        {else/}
+                        <button class="layui-btn layui-btn-radius layui-btn-warm">考证</button>
+                        {/if}
+                     </td>
+                   </tr>
+                   {/foreach}
+				</table>
+			   
+			</div>	  	   
+		</div>	  	  
+		<center><button type="button" class="btn btn-success btn-pubilsh">发布</button></center>    
+		</div>
+	</body>
+<script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  laydate.render({
+      elem: '#stimer',
+      type: 'datetime'
+    });
+  laydate.render({
+      elem: '#etimer',
+      type: 'datetime'
+    });
+});
+</script>
+<script type="text/javascript">   
+		$(".btn-pubilsh").click(function(){   	   
+			var syear    =$('#syear').val();       
+			var stimer   =$('#stimer').val();       
+			var etimer   =$('#etimer').val();       
        if(syear==''||stimer==''||etimer==''){
-          layer.msg(                 '内容填写不能空',                    {                    icon: 6,                     time: 2000 //2秒关闭（如果不配置，默认是3秒）                 },);  
+          layer.msg('内容填写不能空',{icon: 6, time: 2000});  
           return false; 
-       }           var i=0,j=0;        $('#tabProduct').find('tr').each(function () {                $(this).find('td').each(function () {                    html[i]=$(this).text();                    i++;            });             content = content.concat(html);            i=0;                    });           // alert(content);          $.ajax({            url:'ADMIN/Setting/publish',            type:'POST',            data:{              syear:syear,              stimer:stimer,              etimer:etimer,              content:content            },            dataType:'JSON',            success:function(res){              location.href="ADMIN/Setting/publish";               // if(res['code']>0){               //  layer.msg(               //    '发布成功',                //    {               //      icon: 1,               //      time: 2000 //2秒关闭（如果不配置，默认是3秒）               //    },);                  // }else{               //    layer.msg(               //    '发布失败',                //    {               //      icon: 2,               //      time: 2000 //2秒关闭（如果不配置，默认是3秒）               //    });               //    return false;               // }            },            error:function(){               layer.msg('系统出错',{icon:5});               return false;            }          });     });    </script>
+       }                    
+	   $.ajax({            
+	        url:'ADMIN/Setting/setday',           
+			type:'POST',            
+			data:{              
+				syear:syear,              
+				stimer:stimer,              
+				etimer:etimer,                        
+			},            
+			dataType:'JSON',            
+			success:function(res){              
+			   location.href="ADMIN/Setting/history"; 
+				/*if(res['code']>0){    
+					layer.msg('发布成功',{icon: 1,time: 2000},);   
+				}else{    
+					layer.msg('发布失败',  { icon: 2, time: 2000 });    
+					return false;              
+				}          */  
+			},           
+			error:function(){               
+				layer.msg('系统出错',{icon:5});              
+				return false;            
+			}          
+			});    
+		});    
+</script>

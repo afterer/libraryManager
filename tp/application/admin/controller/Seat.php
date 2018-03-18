@@ -103,9 +103,8 @@ class Seat extends Base{
 		
 		if(!empty(Input("param.syear"))){
 			$seat  = new SeatModel();
-            $syear    = Input("param.syear");
-            //$syear    =1;
-            $data     = $seat->getDataToExcel($syear);
+            $syear = Input("param.syear");
+            $data  = $seat->getDataToExcel($syear);
             //var_dump($data);exit;
             Vendor('phpoffice.phpexcel.Classes');
             $objPHPExcel = new \PHPExcel();

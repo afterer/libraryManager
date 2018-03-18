@@ -25,10 +25,30 @@
    <div class="page-header page-header-modifyUser">
       <h3 style="font-weight:bold;">座位搜索</h3>
        <form class="form-horizontal" role="form">
+       <div class="form-group">       
+        <label class="col-sm-2 control-label">学年</label>        
+          <div class="col-sm-10">       
+          <select class="form-control public-btn" id="syear">                    
+            <option value="0"></option>         
+            <option value="1_1">2017-2018-第1学期</option>          
+            <option value="1_2">2017-2018-第2学期</option>         
+            <option value="2_1">2018-2019-第1学期</option>          
+            <option value="2_2">2018-2019-第2学期</option>         
+            <option value="3_1">2019-2020-第1学期</option>          
+            <option value="3_2">2019-2020-第2学期</option>         
+            <option value="4_1">2020-2021-第1学期</option>          
+            <option value="4_2">2019-2020-第2学期</option>         
+            <option value="5_1">2021-2022-第1学期</option>          
+            <option value="5_2">2021-2022-第2学期</option>         
+            <option value="6_1">2022-2023-第1学期</option>         
+            <option value="6_2">2022-2023-第2学期</option>       
+          </select>       
+          </div>      
+        </div>        
 	      <div class="form-group">
-			    <label for="roomid" class="col-sm-2 control-label">分馆</label>
+			    <label for="roomid" class="col-sm-2 control-label">自习室</label>
 			    <div class="col-sm-10">
-			         <input type="text" class="form-control" placeholder="请输入分馆号，如1" id="branchid">
+			         <input type="text" class="form-control" placeholder="请输入自习室" id="roomid">
 			    </div>
 	      </div>
 	      <div class="form-group">
@@ -51,7 +71,6 @@
 		      <th>学号</th>
 		      <th>学院</th>
 		      <th>专业</th>
-		      <th>预约时间</th>
 		      <th>自习室</th>
 		      <th>座位号</th>
 		    </tr>
@@ -64,18 +83,19 @@
 {include file="public/footer"}
 <script type="text/javascript">
     $(".btn-search").click(function(){
-    	var branchid= $("#branchid").val();
+    	var roomid  = $("#roomid").val();
     	var seatid  = $("#seatid").val();
+     
 
-    	if(branchid!=""||seatid!=""){
+    	if(roomid!=""||seatid!=""){
             $.ajax({
             	type:'POST',
             	url:'ADMIN/Search/seat',
             	data:{
-            		branchid:branchid,
-            		seatid:seatid
+            		roomid:roomid,
+            		seatid:seatid,
             	},
-            	dataType:'json',
+            	dataType:'JSON',
             	success:function(res){
             		if(res['code']>0){
             			var arrayid  = new Array();
@@ -85,19 +105,18 @@
                    	    if(arrayid.length>0){
                    	   	   for(var i=0;i<arrayid.length;i++){
                    	   	   html  +='<tr>';
-		                   	   html  +='<td>'+arrayid[i]['oid']+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['sid']+'</td>';
 		                   	   html  +='<td>'+arrayid[i]['name']+'</td>';
 		                   	   html  +='<td>'+arrayid[i]['number']+'</td>';
 		                   	   html  +='<td>'+getInstitute(arrayid[i]['college'])+'</td>';
 		                   	   html  +='<td>'+arrayid[i]['major']+'</td>';
-		                   	   html  +='<td>'+arrayid[i]['dtimer']+'</td>';
-		                   	   html  +='<td>'+arrayid[i]['branch']+'</td>';
-		                   	   html  +='<td>'+arrayid[i]['seatid']+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['seat_room']+'</td>';
+		                   	   html  +='<td>'+arrayid[i]['seat_id']+'</td>';
 		                   	   html  +='</tr>';
                    	   	   } 
                    	   }else{
                    	   	   html  +='<tr>';
-                   	   	   html  +='<td colspan="8" style="text-align:center">'+'目前没有结果'+'</td>';
+                   	   	   html  +='<td colspan="7" style="text-align:center">'+'目前没有结果'+'</td>';
                    	   	   html  +='</tr>';
                    	   }
                    	   
