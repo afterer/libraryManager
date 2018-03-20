@@ -1,0 +1,104 @@
+{include file="public/header"}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/mui/css/mui.min.css">
+<style type="text/css">
+		body{
+		    background-color: #ccc;
+		}
+        .mui-bar{
+       	    background-color: #fff;
+       }
+       .user-list{
+       	 font-size:18px;
+       	 margin-top:15%;
+       	 background-color:#fff;
+       }
+       .menu-list{
+       	 width:95%;
+       	 height:auto;
+       	 margin:10px 10px;
+       	 border-top:1px solid #eee;
+       	 border-right:1px solid #eee;
+       	 border-left:1px solid #eee;
+       	 list-style:none;
+       }
+       .menu-list a{
+       	height:45px;
+       	width:100%;
+       	text-decoration:none;
+       	color:#222;
+       }
+       .menu-bar{
+         height:45px;
+         width:100%;
+         border-bottom:1px solid #eee;
+    		 line-height:45px;   
+    		 overflow:hidden;   
+    		 padding-left:2%;
+       }
+       .menu-bar input{
+         border:1px solid #ccc;
+         float:right;
+         width:35%;
+         height:80%;
+         border-radius:8px;
+         margin-right:2%;
+         margin-top:1%;
+       }
+</style>
+<body>
+    <div class="mui-navbar-inner mui-bar mui-bar-nav">
+		<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>
+		<h1 class="mui-center mui-title">更改座位</h1>
+	</div>
+	 <div class="user-list">
+       <ul class="menu-list">
+          <li class="menu-bar">自习室<input type="text" id="roomid" autofocus="autofocus"></li>
+          <li class="menu-bar">座位<input type="text" id="seatid" ></li>
+       </ul>
+       <ul class="menu-list">
+          <li class="menu-bar">
+            <center><button class="layui-btn layui-btn-radius layui-btn-normal">修改</button></center></li>
+       </ul>
+    </div>
+</body>
+<script src="__PUBLIC__/mui/js/mui.min.js"></script>
+<script type="text/javascript">
+   $('.layui-btn-normal').click(function(){
+      var roomid = $('#roomid').val();
+      var seatid = $('#seatid').val();
+
+      if(roomid!=''&&seatid!=''){
+         $.ajax({
+           url:'APP_MAIN/Student/update',
+           type:'POST',
+           data:{
+             roomid:roomid,
+             seatid:seatid
+           },
+           dataType:'JSON',
+           success:function(res){
+              if(res.code>0){
+                layer.msg(res.message,{icon:6,time:2000},function(){
+                    location.href='APP_MAIN/Student/info67';
+                });
+              }else{
+                 layer.msg(res.message,{icon:5,time:2000},function(){
+                    location.href='APP_MAIN/Student/info67';
+                });
+              }
+           },
+           error:function(){
+             layer.msg('系统出错',{icon:2,time:2000},function(){
+             return false;
+        });
+           }
+         });
+      }else{
+        layer.msg('不能为空',{icon:3,time:2000},function(){
+          return false;
+        });
+      }
+   });
+</script>

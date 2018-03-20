@@ -28,7 +28,7 @@ class Index extends Base
     //个人信息页面，显示选座信息
     public function user(){
        // $index      = new IndexModel();
-       // $studentNo  = Session::get('student_number');
+       // $studentNo  = Session::get('number');
        // $data       = $index->getUserInfo($studentNo);
        // $this->assign('data',$data);
        return $this->fetch();

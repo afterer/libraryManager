@@ -117,6 +117,21 @@ class Setting extends Base{
 		return $this->fetch();
 		
 	}
+  //修改自习室
+  public function modifiyseat(){
+    $setting  = new SettingModel();
+    if(request()->isAjax()){
+      $roomid  = $_POST['roomid'];
+      $num     = $_POST['num'];
+      $usage   = $_POST['usage'];
+      $res     = $setting->updateSeat($roomid,$num,$usage);
+      if($res){
+        return json(array("code"=>1,"message"=>"修改成功"));
+      }
+      return json(array("code"=>0,"message"=>"修改失败"));
+    }
+    return $this->fetch();
+  }
 
 }
 ?>

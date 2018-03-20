@@ -107,6 +107,11 @@ class Setting{
       return $id;
     }
   }
+  public function updateSeat($roomid,$num,$usage){
+    $fixed  = new FixedModel();
+    $res    = $fixed->where(array('room'=>$roomid))->update(array("total"=>$num,"usage"=>$usage));
+    return $res;
+  }
 
 }
 ?>

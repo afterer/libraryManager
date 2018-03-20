@@ -12,9 +12,9 @@
             }
             .seat{
             	width:100%;
-            	height:auto;
+            	height:900px;
             	margin-top:15%;
-            	position:relative;
+            	margin-bottom:100px;
             }
             .seat-ul{
             	position: relative;
@@ -49,7 +49,7 @@
             	height:100%;
             	width:100%;
             	text-align:center;
-            	z-index:99;
+            	z-index:1;
             	line-height:49px;
             	font-size:18px;
             	color:#555;
@@ -58,6 +58,7 @@
             	width:100%;
             	height:55px;
             	position:fixed;
+                z-index:2;
             	bottom:0px;
             	border:1px solid #eee;
             	line-height:55px;
@@ -70,7 +71,7 @@
             	padding-left:5%;
             	font-size:18px;
             }
-            .btn{
+            .layui-btn{
             	float:right;
             	margin-right:5%;
             	margin-top:2%;
@@ -81,7 +82,11 @@
         <div class="mui-navbar-inner mui-bar mui-bar-nav">
             <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
                 <span class="mui-icon mui-icon-left-nav" style="font-size:17px;">
+                  {if condition="$room.room_usage eq 1"}
                  考研
+                 {else/}
+                 考证
+                 {/if}
                 </span>
             </button>
             <h1 class="mui-center mui-title">{$room.room_id}</h1>
@@ -97,7 +102,7 @@
            </ul>
         </div>
         <div class="seat-footer">
-             <div class="seat-text">已选：{$room.room_id}室<b id="seat-id">0</b>号<button class="btn btn-xs btn-info">确定</button></div>
+             <div class="seat-text">已选：{$room.room_id}室<b id="seat-id">0</b>号<button class="layui-btn layui-btn-normal">确定</button></div>
         </div>
     </body>
 <script type="text/javascript">
@@ -126,16 +131,19 @@
        	}
 </script>
 <script type="text/javascript">
-       var seated  = "{$choosed}";
+       var seated  = '{$choosed}';
        seated      = seated.split(",");
-       for(var i=0;i<seated.length;i++){
-       	 var seatto       = 'seat'+seated[i];
-         var choosedImg   = document.getElementById(seatto);
-         choosedImg.src="__STATIC__/images/selected.png";
-       }    
+       if(seated.length>1){
+         for(var i=0;i<seated.length;i++){
+             var seatto       = 'seat'+seated[i];
+             var choosedImg   = document.getElementById(seatto);
+             choosedImg.src   = '__STATIC__/images/selected.png';
+           }    
+       }
+       
 </script>
 <script type="text/javascript">
-    $(".btn").click(function(){
+    $(".layui-btn").click(function(){
 	   	 var myseatid  = $("#seat-id").text();
 	   	 $.ajax({
 	   	 	url:'APP_MAIN/Select/seatSure',

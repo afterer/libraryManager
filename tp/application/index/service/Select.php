@@ -64,7 +64,7 @@ class Select{
     public function seatIsFull($roomid,$year){
         $room   = new RoomModel();
         $seat   = new SeatModel();
-        $array  = array("seat_year"=>$year,"seat_room"=>$roomid,"seat_own"=>array('exp','is null'));
+        $array  = array("seat_year"=>$year,"seat_room"=>$roomid,"seat_state"=>0);
         $where  = array("room_year"=>$year,"room_id"=>$roomid);
         $num    = $seat->where($array)->count();
         $total  = $room->where($where)->value("room_number");

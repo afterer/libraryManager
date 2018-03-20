@@ -54,6 +54,7 @@ class Select extends Base{
             $choosed[$i++] = $v['seat_id'];
            }
         }
+       // var_dump($choosed);exit;
         $choosed = implode(",", $choosed);
         $this->assign("choosed",$choosed);
         $this->assign("data",$data);

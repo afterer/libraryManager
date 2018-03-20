@@ -7,17 +7,19 @@
     }
     .card-content{
          margin-top:13%;
+         margin-bottom:20%;
     }
     .card{
     	width:85%;
     	margin-left:8%;
+    	font-weight:bold;
     }
     .card p{
     	color:#fff;
     }
     .card footer{
-    	font-weight:bold;
     	font-size:16px;
+    	color:#000;
     }
 </style>
 <body>
@@ -39,7 +41,7 @@
 	    {foreach name="data" item="list"}
 		    {if condition="$list.room_state eq 0"}
 		    <a href="{:Url('Select/seat',['id'=>$list.room_id]);}">
-			   <div class="card card-inverse card-primary text-center">
+			   <div class="card card-inverse card-info text-center">
 				  <div class="card-block">
 				    <blockquote class="card-blockquote">
 				      <p>可选座</p>
@@ -50,7 +52,7 @@
 			</a>
 			{else /}
 			<a href="">
-				<div class="card card-inverse card-success text-center">
+				<div class="card bg-warning text-center">
 				  <div class="card-block">
 				    <blockquote class="card-blockquote">
 				      <p>不可选座</p>

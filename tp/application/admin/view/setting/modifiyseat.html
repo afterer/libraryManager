@@ -1,0 +1,86 @@
+{include file="public/setting"}
+<style type="text/css">
+     .page-header-modifyUser{
+      	display: inline-block;
+    	float:left;
+    	width:65%;
+    	height:auto;
+    	border-top:2px solid #eee;
+      }
+      .form-horizontal input{
+      	width:50%;
+      	text-align: center;
+      }
+      .form-group{
+      	padding-left:20%;
+      }
+      .form-control{
+        width:50%;
+      }
+</style>
+<body>
+ <div class="page-header page-header-modifyUser">
+    <h3 style="font-weight:bold;">修改自习室</h3>
+      <form class="form-horizontal" role="form">
+		  <div class="form-group">        
+      <label class="col-sm-2 control-label">自习室</label>        
+        <div class="col-sm-10">       
+         <input type="text" class="layui-input public-btn" id="roomid">
+        </div>      
+      </div>      
+		  <div class="form-group">        
+      <label class="col-sm-2 control-label">座位数</label>        
+        <div class="col-sm-10">       
+         <input type="text" class="layui-input public-btn" id="roomNumber">
+        </div>      
+      </div> 
+      <div class="form-group">
+          <label for="sex" class="col-sm-2 control-label">类型</label>
+          <div class="col-sm-10">
+            <label class="radio-inline">
+                <input type="radio" name="usage" id="yan" value="1" checked> 考研
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="usage" id="zheng"  value="2">考证
+            </label>
+          </div>
+        </div>
+		  <center><button type="button" class="btn btn-success" id="btn-commit">修改</button></center>
+	  </form>
+    </div>
+</body>
+<script type="text/javascript">
+   $('#btn-commit').click(function(){
+   	  var roomid  = $('#roomid').val();
+      var num     = $('#roomNumber').val();
+      var usage   = $('input[name="usage"]:checked').val();
+
+      if(roomid!=''&&num!=''&&usage!=''){
+        $.ajax({
+          url:'ADMIN/Setting/modifiyseat',
+          type:'POST',
+          data:{
+            roomid:roomid,
+            num:num,
+            usage:usage
+          },
+          dataTyep:'JSON',
+          success:function(res){
+            if(res.code>0){
+              layer.msg(res.message,{icon:1,time:2000},function(){
+                location.href='ADMIN/Setting/modifiyseat';
+              });
+            }else{
+               layer.msg(res.message,{icon:2,time:2000},function(){
+                return false;
+              });
+            }
+          }
+        });
+      }else{
+        layer.msg('不能为空',{icon:3,time:2000},function(){
+          return false;
+        });
+      }
+   });
+</script>

@@ -14,17 +14,16 @@
        .container table th,td{
        	 text-align: center;
        }
-      
 </style>
 <body>
     <div class="mui-navbar-inner mui-bar mui-bar-nav">
 		<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 			<span class="mui-icon mui-icon-left-nav"></span>
 		</button>
-		<h1 class="mui-center mui-title">其他信息</h1>
+		<h1 class="mui-center mui-title">我的座位</h1>
 	</div>
 	<div class="container">
-
+      {if condition="$status eq 1"}
 	    <table class="table table-bordered">
           <tr><td colspan="2">考研考证座位信息</td></tr>
           <tr>
@@ -46,14 +45,51 @@
            <td>{$data['seat_room']}室{$data['seat_id']}号</td>
          </tr>
          <tr>
-         <th>状态：</th>
-           <td>
-           <button type="button" class="btn btn-success">审核通过</button>
+           <td colspan="2">
+           <button class="layui-btn" id="updateseat">换选</button>&nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-danger">退选</button>
            </td>
-         </tr>
-      
+         </tr>   
        </table>
+       {else /}
+       <center style="height:30px;line-height:30px;">暂无您的选座信息</center>
+       {/if}
 	</div>
 	
 </body>
 <script src="__PUBLIC__/mui/js/mui.min.js"></script>
+<script type="text/javascript">
+   $(".layui-btn-danger").click(function(){
+      layer.open({
+        content: '是否退选？',
+        btn: ['是', '否'],
+        yes: function(){
+            $.ajax({
+              url:'APP_MAIN/Student/withdrawal',
+              type:'POST',
+              success:function(res){
+                if(res.code>0){
+                  layer.msg(res.message,{icon:1,time:1500},function(){
+                    location.href='APP_MAIN/Student/info67';
+                  });
+                }else{
+                   layer.msg(res.message,{icon:5,time:1500},function(){
+                    location.href='APP_MAIN/Student/info67';
+                  });
+                }
+              },
+              error:function(){
+                layer.msg('系统出错',{icon:3,time:1500},function(){
+                   return false;
+                });
+              }
+            });
+        },
+        btn2: function(){
+           location.href='APP_MAIN/Student/info67';
+        },
+      });
+   });
+   $('#updateseat').click(function(){
+      location.href='APP_MAIN/Student/update';
+   });
+</script>
